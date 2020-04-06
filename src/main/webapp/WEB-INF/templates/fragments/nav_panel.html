@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+</head>
+<body>
+    <nav th:fragment="nav_panel" class="nav_panel">
+        <div id="logo">
+            <a href="#">
+                <img src="/images/nav_panel/logo.png" alt="logo">
+            </a>
+        </div>
+        <ul class="list_links">
+            <li><a th:href="@{/home}"><img src="/images/nav_panel/home.png" alt="home"></a></li>
+            <li><a href="#"><img src="/images/nav_panel/news.png" alt="news"></a></li>
+            <li><a href="#"><img src="/images/nav_panel/students.png" alt="students"></a></li>
+            <li><a href="#"><img src="/images/nav_panel/events.png" alt="events"></a></li>
+            <li><a href="#"><img src="/images/nav_panel/contacts.png" alt="contacts"></a></li>
+        </ul>
+    </nav>
+</body>
+</html>

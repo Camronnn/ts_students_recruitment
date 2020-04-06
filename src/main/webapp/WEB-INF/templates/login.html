@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <div class="login">
+            <form method="post">
+                <label for="username">Имя польщователя: <input id="username" type="text"></label>
+                <label for="password">Пароль: <input id="password" type="password"></label>
+                <input type="submit" value="Войти">
+            </form>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>

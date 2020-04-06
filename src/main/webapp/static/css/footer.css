@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    min-height: 900px;
+}
+
+li {
+    margin-top: 20px;
+}
+
+p {
+    display: block;
+    width: 200px;
+    height: 20px;
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+
+#footer {
+    width: 100%;
+    height: 600px;
+    margin-top: 830px;
+    background-color: whitesmoke;
+    font-size: 14px;
+    border-top: 0.5px solid #575353;
+}
+
+.address {
+    float: left;
+    width: 300px;
+    height: 245px;
+    padding: 20px;
+}
+
+.contacts {
+    float: left;
+    margin-left: 100px;
+    width: 350px;
+    height: 245px;
+    padding: 20px;
+}
+
+.administration {
+    float: right;
+    width: 300px;
+    height: 245px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: 50px;
+}
+
+.ul-style {
+    margin-left: 35px;
+    margin-top: 20px;
+}
