@@ -2,13 +2,14 @@ package com.amirdigiev.tsaritsynostudentportfolio.controller;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
 
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String showLoginPage(Model model) {
         return "login";
     }
 }

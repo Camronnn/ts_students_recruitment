@@ -6,21 +6,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/login.css}">
 </head>
 <body>
-    <div th:replace="fragments/nav_panel :: nav_panel"></div>
-    <header th:replace="fragments/header :: header"></header>
     <main>
+        <div class="heading">
+            <h1>Авторизация</h1>
+        </div>
         <div class="login">
-            <form method="post">
-                <label for="username">Имя польщователя: <input id="username" type="text"></label>
-                <label for="password">Пароль: <input id="password" type="password"></label>
-                <input type="submit" value="Войти">
+            <img class="key" src="/images/login_key.png" alt="ключ">
+            <form method="post" action="/login-handler">
+                <div class="username">
+                    <label for="username">Имя:
+                        <input id="username" type="text" placeholder="Введите имя..." autofocus="autofocus">
+                    </label>
+                </div>
+                <div class="password">
+                    <label for="password">Пароль:
+                        <input id="password" class="password_input" placeholder="Введите пароль..." type="password">
+                    </label>
+                </div>
+                <input class="submit" type="submit" value="Войти">
             </form>
+            <div class="redirect_registration">
+                <span>Нет аккаунта? <a th:href="@{/registration}">Регистрация</a></span>
+            </div>
         </div>
     </main>
-    <footer></footer>
 </body>
 </html>

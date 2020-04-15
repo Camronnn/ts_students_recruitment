@@ -1,4 +1,4 @@
 package com.amirdigiev.tsaritsynostudentportfolio.service;
 
-public class PortfolioService {
+public class HrManagerService {
 }

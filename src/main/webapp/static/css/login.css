@@ -1,0 +1,84 @@
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+}
+
+.heading {
+    position: absolute;
+    top: 140px;
+    left: 515px;
+}
+
+.login {
+    position: relative;
+    top: 200px;
+    left: 450px;
+    width: 300px;
+    height: 150px;
+    background-color: snow;
+    /*box-shadow: 0 0 2px 0;*/
+    border-top: 20px solid crimson;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.key {
+    float: left;
+    margin-top: 25px;
+    margin-left: 20px;
+    width: 60px;
+    height: 60px;
+}
+
+.submit {
+    float: left;
+    width: 129px;
+    margin-top: 10px;
+    margin-left: 77.5px;
+}
+
+.login .username {
+    float: left;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.login .username label {
+    display: block;
+    margin-left: 10px;
+}
+
+.login .username input {
+    width: 125px;
+}
+
+.login .password {
+    float: left;
+    margin-left: 19.5px;
+    margin-top: 10px;
+}
+
+.login .password input {
+    width: 125px;
+}
+
+.login .redirect_registration {
+    float: left;
+    margin-top: 20px;
+    margin-left: 65px;
+    width: 200px;
+    height: 20px;
+}
+
+.login .redirect_registration a {
+    float: right;
+    margin-top: -18px;
+    margin-left: 10px;
+    width: 95px;
+    height: 20px;
+}

@@ -19,7 +19,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.amirdigiev.tsaritsynostudentportfolio")
+@ComponentScan("com.amirdigiev.tsaritsynostudentportfolio.config")
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
     private ApplicationContext applicationContext;

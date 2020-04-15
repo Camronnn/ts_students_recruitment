@@ -4,9 +4,11 @@
 //import org.hibernate.cfg.AvailableSettings;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.ComponentScan;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.context.annotation.PropertySource;
 //import org.springframework.core.env.Environment;
+//import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //import org.springframework.jdbc.datasource.DriverManagerDataSource;
 //import org.springframework.orm.hibernate5.HibernateTransactionManager;
 //import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -17,6 +19,8 @@
 //
 //@Configuration
 //@EnableTransactionManagement
+//@EnableJpaRepositories(basePackages = {"com.amirdigiev.tsaritsynostudentportfolio.repository"})
+//@ComponentScan({"com.amirdigiev.tsaritsynostudentportfolio.config"})
 //@PropertySource(value = { "classpath:application.properties" })
 //public class HibernateConfig {
 //
@@ -51,7 +55,7 @@
 //    public LocalSessionFactoryBean getSessionFactory() {
 //        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 //        sessionFactory.setDataSource(getDataSource());
-//        sessionFactory.setPackagesToScan("com.amirdigiev.tsaritsynostudentportfolio");
+//        sessionFactory.setPackagesToScan("com.amirdigiev.tsaritsynostudentportfolio.model");
 //        sessionFactory.setHibernateProperties(getHibernateProperties());
 //        return sessionFactory;
 //    }

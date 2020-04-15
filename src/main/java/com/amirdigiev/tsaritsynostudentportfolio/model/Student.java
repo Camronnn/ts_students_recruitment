@@ -6,14 +6,15 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor
-@Entity(name = "Student")
+@Entity
 @Table(name = "student", schema = "public")
-public class Student extends User implements Serializable {
+public class Student extends User {
 
     private String studentIdNumber;
     private String groupNumber;
@@ -29,16 +30,18 @@ public class Student extends User implements Serializable {
                    String matchingPassword,
                    String name,
                    String surname,
-                   Integer age,
+                   String patronymic,
                    LocalDate birthday,
                    String hometown,
                    String number,
+                   String mail,
                    String studentIdNumber,
                    String groupNumber,
                    String academicPerformance,
                    String faculty,
-                   String department) {
-        super(id, username, password, matchingPassword, name, surname, age, birthday, hometown, number);
+                   String department,
+                   List<Role> roles) {
+        super(id, username, password, matchingPassword, name, patronymic, surname, birthday, hometown, number, mail, roles);
         this.studentIdNumber = studentIdNumber;
         this.groupNumber = groupNumber;
         this.academicPerformance = academicPerformance;

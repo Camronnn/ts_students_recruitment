@@ -5,16 +5,19 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <title>Select user role</title>
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/footer.css}">
 </head>
 <body>
-    <div th:replace="fragments/nav_panel :: nav_panel"></div>
-    <header th:replace="fragments/header :: header"></header>
     <main>
-        <div>
+        <div class="role_block">
+            <form method="post" th:action="@{/select_role}">
+                <input class="student_inp" type="submit" th:name="student">
+                <input class="hrManager_inp" type="submit" th:name="hrManager">
+                <input class="director_inp" type="submit" th:name="director">
+            </form>
         </div>
     </main>
     <footer th:replace="fragments/footer :: footer"></footer>

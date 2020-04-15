@@ -1,45 +1,28 @@
 package com.amirdigiev.tsaritsynostudentportfolio.service;
 
-import com.amirdigiev.tsaritsynostudentportfolio.repostitory.StudentRepository;
 import com.amirdigiev.tsaritsynostudentportfolio.model.Student;
-import org.hibernate.SessionFactory;
+import com.amirdigiev.tsaritsynostudentportfolio.repository.CommonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
 
-    private final StudentRepository studentRepository;
+    private final CommonRepository<Student> commonRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentService(@Qualifier("studentRepository") CommonRepository<Student> commonRepository) {
+        this.commonRepository = commonRepository;
     }
 
-    public List<Student> getAllStudents() {
-        return studentRepository.getAllStudents();
+    public Student add(Student student) {
+        return commonRepository.save(student);
     }
 
-    public Student getStudentById(Long id) {
-        return studentRepository.getStudentById(id);
+    public Optional<Student> findById(Long id) {
+        return commonRepository.findById(id);
     }
-
-    public Student save(Student student) {
-        return studentRepository.save(student);
-    }
-
-    public void update(Student newStudent) {
-    }
-
-    public String delete(Long id) {
-        if(studentRepository.getStudentById(id) != null) {
-            studentRepository.deleteById(id);
-            return "Пользователь под id " + "id" + " успешно удалён";
-        }
-
-        return "Такого пользователя не существует!";
-    }
-
 }

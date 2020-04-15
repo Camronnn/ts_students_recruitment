@@ -4,15 +4,15 @@ package com.amirdigiev.tsaritsynostudentportfolio.model;
 import lombok.*;
 
 import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor
-@Entity(name = "Director")
+@Entity
 @Table(name = "director", schema = "public")
 public class Director extends User {
 
@@ -20,17 +20,30 @@ public class Director extends User {
 
     @Builder
     public Director(Long id,
-                   String username,
-                   String password,
-                   String matchingPassword,
-                   String name,
-                   String surname,
-                   Integer age,
-                   LocalDate birthday,
-                   String hometown,
-                   String number,
-                   String department) {
-        super(id, username, password, matchingPassword, name, surname, age, birthday, hometown, number);
+                    String username,
+                    String password,
+                    String matchingPassword,
+                    String name,
+                    String surname,
+                    String patronymic,
+                    LocalDate birthday,
+                    String hometown,
+                    String number,
+                    String mail,
+                    String department,
+                    List<Role> roles) {
+        super(id,
+                username,
+                password,
+                matchingPassword,
+                name,
+                surname,
+                patronymic,
+                birthday,
+                hometown,
+                number,
+                mail,
+                roles);
         this.department = department;
     }
 }

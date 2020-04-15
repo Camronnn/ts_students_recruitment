@@ -4,15 +4,16 @@ package com.amirdigiev.tsaritsynostudentportfolio.model;
 import lombok.*;
 
 import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor
-@Entity(name = "Moderator")
+@Entity
 @Table(name = "moderator", schema = "public")
 public class Moderator extends User {
 
@@ -23,10 +24,23 @@ public class Moderator extends User {
                      String matchingPassword,
                      String name,
                      String surname,
-                     Integer age,
+                     String patronymic,
                      LocalDate birthday,
                      String hometown,
-                     String number) {
-        super(id, username, password, matchingPassword, name, surname, age, birthday, hometown, number);
+                     String number,
+                     String mail,
+                     List<Role> roles) {
+        super(id,
+                username,
+                password,
+                matchingPassword,
+                name,
+                surname,
+                patronymic,
+                birthday,
+                hometown,
+                number,
+                mail,
+                roles);
     }
 }

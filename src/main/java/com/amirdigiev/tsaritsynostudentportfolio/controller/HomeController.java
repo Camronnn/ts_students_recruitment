@@ -1,33 +1,35 @@
 package com.amirdigiev.tsaritsynostudentportfolio.controller;
 
 import com.amirdigiev.tsaritsynostudentportfolio.model.Student;
+import com.amirdigiev.tsaritsynostudentportfolio.model.User;
 import com.amirdigiev.tsaritsynostudentportfolio.service.StudentService;
+import com.amirdigiev.tsaritsynostudentportfolio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
-@RequestMapping("/home")
 public class HomeController {
 
     private final StudentService studentService;
+    private final UserService userService;
 
     @Autowired
-    public HomeController(StudentService studentService) {
+    public HomeController(StudentService studentService, UserService userService) {
         this.studentService = studentService;
+        this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/home")
     public String showHomePage() {
         return "home";
     }
 
     @GetMapping("/home/{id}")
-    public String getStudentById(@PathVariable Long id) {
-        Student student = studentService.getStudentById(id);
+    public void getStudentById(@PathVariable Long id) {
+        Optional<User> student = userService.findById(id);
         System.out.println(student);
-        return "home";
     }
 }
