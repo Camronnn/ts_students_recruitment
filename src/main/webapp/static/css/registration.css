@@ -18,7 +18,7 @@ a:hover {
     top: 100px;
     left: 415px;
     width: 400px;
-    height: 360px;
+    height: 410px;
     background-color: snow;
     text-align: center;
     border-top: 30px solid crimson;
@@ -54,6 +54,6 @@ a:hover {
 
 .redirect_login {
     position: absolute;
-    top: 320px;
+    top: 380px;
     left: 180px;
 }

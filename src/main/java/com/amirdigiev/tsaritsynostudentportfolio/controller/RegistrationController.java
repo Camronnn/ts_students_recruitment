@@ -1,7 +1,5 @@
 package com.amirdigiev.tsaritsynostudentportfolio.controller;
 
-import com.amirdigiev.tsaritsynostudentportfolio.model.Roles;
-import com.amirdigiev.tsaritsynostudentportfolio.model.Student;
 import com.amirdigiev.tsaritsynostudentportfolio.model.User;
 import com.amirdigiev.tsaritsynostudentportfolio.service.UserService;
 import com.amirdigiev.tsaritsynostudentportfolio.service.security.SecurityService;
@@ -13,13 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
 @Slf4j
 @Controller
-public class RegistrationController<U extends User> {
+public class RegistrationController {
 
     private final UserService userService;
     private final SecurityService securityService;
@@ -30,25 +27,16 @@ public class RegistrationController<U extends User> {
         this.securityService = securityService;
     }
 
-//    @GetMapping("/select_role")
-//    public String showRoleSelectionForm(@RequestParam U student,
-//                                        @RequestParam U hrManager,
-//                                        @RequestParam U Director,
-//                                        Model model) {
-//
-//    }
-
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
-        User newUser = new Student();
         log.info("showRegistrationForm method called");
-        model.addAttribute("newUser", newUser);
+        model.addAttribute("newUser", new User());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registerUserAccount(@ModelAttribute @Valid U newUser,
+    public String registerUserAccount(@ModelAttribute("newUser") @Valid User newUser,
                                       BindingResult bindingResult,
                                       Model model) {
         log.info("registerUserAccount method called");
@@ -58,21 +46,14 @@ public class RegistrationController<U extends User> {
         }
 
         if(!newUser.getPassword().equals(newUser.getMatchingPassword())) {
-            log.error("Passwords do not match: " + newUser.getPassword() + " != " + newUser.getMatchingPassword());
+            log.error("Пароли не совпадают: " + newUser.getPassword() + " != " + newUser.getMatchingPassword());
             model.addAttribute("passwordError", "Пароли не совпадают!");
             return "registration";
         }
 
-        if(userService.findById(newUser.getId()).isPresent()) {
-            log.error("A user with the same name already exists");
-            model.addAttribute("usernameError", "Пользователь с таким именем уже существует!");
-
-            return "registration";
-        }
-
-        userService.checkUserAuthorities(newUser);
-        securityService.autoLogin(newUser.getUsername(), newUser.getMatchingPassword());
-        log.info("New user registered: " + newUser.toString());
+        userService.add(newUser);
+//        securityService.autoLogin(newUser.getUsername(), newUser.getMatchingPassword());
+        log.info("Новый пользователь зарегистрирован: " + newUser.toString());
 
         return "redirect:/login";
     }

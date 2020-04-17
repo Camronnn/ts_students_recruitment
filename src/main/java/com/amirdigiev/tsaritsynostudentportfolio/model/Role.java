@@ -14,7 +14,6 @@ import java.util.Set;
 @Table(name = "role", schema = "public")
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class Role implements GrantedAuthority {
 

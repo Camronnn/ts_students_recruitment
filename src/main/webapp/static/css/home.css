@@ -1,0 +1,196 @@
+body {
+    font-family: "Times New Roman", sans-serif;
+}
+
+.avatar_block {
+    float: left;
+    margin-top: 30px;
+    margin-left: 30px;
+    width: 300px;
+    height: 300px;
+    background-color: snow;
+    box-shadow: 0 0 2px 0;
+}
+
+.avatar_block img {
+    width: 280px;
+    height: 280px;
+    margin-top: 10px;
+    margin-left: 10px;
+    box-shadow: 0 0 2px 0;
+}
+
+.role {
+    float: left;
+    margin-top: 330px;
+    margin-left: -300px;
+    width: 300px;
+    height: 50px;
+    background-color: CornflowerBlue;
+    box-shadow: 0 0 2px 0;
+    text-align: center;
+}
+
+.role span {
+    color: white;
+    display: block;
+    margin-top: 10px;
+    font-size: 25px;
+}
+
+.fullname {
+    float: left;
+    margin-top: 30px;
+    margin-left: 30px;
+    width: 500px;
+    height: 40px;
+    background-color: snow;
+    box-shadow: 0 0 2px 0;
+}
+
+.fullname .abbr {
+    float: left;
+    padding: 7px;
+    font-size: 20px;
+}
+
+.fullname div {
+    width: 250px;
+    height: 20px;
+    margin-top: 7px;
+    margin-left: 50px;
+    font-size: 20px;
+}
+
+.fullname img {
+    float: left;
+    width: 35px;
+    height: 30px;
+    margin-top: -23px;
+    margin-left: 390px;
+}
+
+.user_data {
+    float: left;
+    margin-top: 10px;
+    margin-left: 30px;
+    width: 500px;
+    height: 300px;
+    background-color: snow;
+    box-shadow: 0 0 2px 0;
+}
+
+.user_data .birthday {
+    float: left;
+    margin-top: 5px;
+    margin-left: 20px;
+    width: 250px;
+    height: 30px;
+}
+
+.user_data .birthday img {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.user_data .birthday span {
+    float: left;
+    margin-top: 12px;
+    margin-left: 5px;
+}
+
+.user_data .hometown {
+    float: left;
+    margin-top: 10px;
+    margin-left: 17px;
+    width: 250px;
+    height: 30px;
+}
+
+.user_data .hometown img {
+    float: left;
+    width: 25px;
+    height: 25px;
+}
+
+.user_data .hometown span {
+    float: left;
+    margin-top: 4px;
+    margin-left: 3px;
+}
+
+.user_data .mail {
+    float: left;
+    margin-left: 10px;
+    width: 400px;
+    height: 30px;
+}
+
+.user_data .mail img {
+    float: left;
+    width: 40px;
+    height: 40px;
+}
+
+.user_data .mail span:nth-child(2) {
+    float: left;
+    margin-left: -5px;
+    margin-top: 10px;
+}
+
+.user_data .mail span:nth-child(3) {
+    float: left;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.user_data .number {
+    float: left;
+    margin-left: 20px;
+    margin-top: 15px;
+    width: 400px;
+    height: 30px;
+}
+
+.user_data .number img {
+    float: left;
+    width: 20px;
+    height: 20px;
+}
+
+.user_data .number span:nth-child(2) {
+    float: left;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
+.user_data .number span:nth-child(3) {
+    float: left;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
+.user_data .rating {
+    float: right;
+    margin-top: -133px;
+    margin-right: 10px;
+}
+
+.user_data .rating span:nth-child(1) {
+    float: left;
+}
+
+.user_data .rating span:nth-child(2) {
+    float: left;
+    margin-top: 1px;
+    margin-left: 5px;
+}
+
+.user_data .rating img {
+    float: right;
+    margin-top: -5px;
+    width: 30px;
+    height: 30px;
+}

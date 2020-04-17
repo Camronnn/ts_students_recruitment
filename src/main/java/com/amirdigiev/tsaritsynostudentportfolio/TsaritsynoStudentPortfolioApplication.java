@@ -9,5 +9,4 @@ public class TsaritsynoStudentPortfolioApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TsaritsynoStudentPortfolioApplication.class, args);
 	}
-
 }

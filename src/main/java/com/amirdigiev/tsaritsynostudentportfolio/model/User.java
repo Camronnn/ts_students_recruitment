@@ -12,21 +12,17 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
-
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Entity
+@Table(name = "usr", schema = "public")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "usr")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
     private String password;
 
@@ -41,6 +37,8 @@ public class User implements UserDetails, Serializable {
     private String hometown;
     private String number;
     private String mail;
+    private int rating;
+    private String avatar;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

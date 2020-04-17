@@ -13,11 +13,9 @@
 <body>
     <main>
         <div class="role_block">
-            <form method="post" th:action="@{/select_role}">
-                <input class="student_inp" type="submit" th:name="student">
-                <input class="hrManager_inp" type="submit" th:name="hrManager">
-                <input class="director_inp" type="submit" th:name="director">
-            </form>
+            <div><a th:href="@{/re}"></a></div>
+            <div></div>
+            <div></div>
         </div>
     </main>
     <footer th:replace="fragments/footer :: footer"></footer>

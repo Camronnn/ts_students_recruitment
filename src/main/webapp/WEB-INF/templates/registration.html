@@ -14,19 +14,19 @@
         <div class="registr_block">
             <form method="post" th:action="@{/registration}" th:object="${newUser}">
                 <div class="username">
-                    <label for="username">Имя пользователя:<input id="username" type="text" th:fierld="*{username}"></label>
+                    <label for="username">Имя пользователя:<input id="username" type="text" th:field="*{username}"></label>
                 </div>
                 <div class="password">
-                    <label for="password">Пароль:<input id="password" type="password" th:fierld="*{password}"></label>
+                    <label for="password">Пароль:<input id="password" type="password" th:field="*{password}"></label>
                 </div>
                 <div class="matching">
-                    <label for="matching">Подтверждение пароля:<input id="matching" type="password" th:fireld="*{matchingPassword}"></label>
-                </div>
-                <div class="name">
-                    <label for="name">Имя:<input id="name" type="text" th:field="*{name}"></label>
+                    <label for="matching">Подтверждение пароля:<input id="matching" type="password" th:field="*{matchingPassword}"></label>
                 </div>
                 <div class="surname">
                     <label for="surname">Фамилия:<input id="surname" type="text" th:field="*{surname}"></label>
+                </div>
+                <div class="name">
+                    <label for="name">Имя:<input id="name" type="text" th:field="*{name}"></label>
                 </div>
                 <div class="patronymic">
                     <label for="patronymic">Отчество:<input id="patronymic" type="text" th:field="*{patronymic}"></label>
@@ -36,6 +36,12 @@
                 </div>
                 <div class="mail">
                     <label for="mail">Эл.почта:<input id="mail" type="email" th:field="*{mail}"></label>
+                </div>
+                <div class="hometown">
+                    <label for="hometown">Город:<input id="hometown" type="text" th:field="*{hometown}"></label>
+                </div>
+                <div class="number">
+                    <label for="number">Номер тел.:<input id="number" type="text" th:field="*{number}"></label>
                 </div>
                 <button class="submit" type="submit">Зарегистрироваться</button>
             </form>

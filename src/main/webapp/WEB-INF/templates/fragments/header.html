@@ -9,6 +9,21 @@
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
 </head>
 <body>
-    <div th:fragment="header" id="header"></div>
+    <div th:fragment="header" id="header">
+        <div class="login">
+            <div class="avatar">
+                <img th:src="@{'/images/avatar/' + ${avatar}}" alt="avatar">
+            </div>
+            <span class="username" th:text="${username}"></span>
+            <img class="arrow" src="/images/home/arrow_down.png" alt="arrow">
+            <div class="submenu">
+                <ul>
+                    <li><a th:href="@{/home}">Моя страница</a></li>
+                    <li><a th:href="@{/home/edit}">Редактировать</a></li>
+                    <li><a th:href="@{/logout}">Выход</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
