@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/login.css}">
+</head>
+<body>
+<main>
+    <div class="heading">
+        <h1>Авторизация</h1>
+    </div>
+    <div class="login">
+        <img class="key" src="/images/login_key.png" alt="ключ">
+        <form method="post" th:action="@{/directorLogin}">
+            <div class="username">
+                <label for="username">Имя:
+                    <input name="username" id="username" type="text" placeholder="Введите имя..." autofocus="autofocus">
+                </label>
+            </div>
+            <div class="password">
+                <label for="password">Пароль:
+                    <input name="password" id="password" class="password_input" placeholder="Введите пароль..." type="password">
+                </label>
+            </div>
+            <input class="submit" type="submit" value="Войти">
+        </form>
+        <div class="redirect_registration">
+            <span>Нет аккаунта? <a th:href="@{/registration/select_role}">Регистрация</a></span>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -9,16 +9,16 @@ a:hover {
 
 .heading {
     position: absolute;
-    top: 30px;
+    top: -10px;
     left: 530px;
 }
 
 .registr_block {
     position: relative;
-    top: 100px;
+    top: 50px;
     left: 415px;
     width: 400px;
-    height: 410px;
+    height: 450px;
     background-color: snow;
     text-align: center;
     border-top: 30px solid crimson;
@@ -52,8 +52,12 @@ a:hover {
     height: 30px;
 }
 
+.registr_block form .role {
+    margin-top: 15px;
+}
+
 .redirect_login {
     position: absolute;
-    top: 380px;
+    top: 420px;
     left: 180px;
 }

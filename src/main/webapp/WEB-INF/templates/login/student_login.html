@@ -15,7 +15,7 @@
         </div>
         <div class="login">
             <img class="key" src="/images/login_key.png" alt="ключ">
-            <form method="post" action="/login-handler">
+            <form method="post" th:action="@{/login/studentLogin}">
                 <div class="username">
                     <label for="username">Имя:
                         <input name="username" id="username" type="text" placeholder="Введите имя..." autofocus="autofocus">
@@ -29,7 +29,7 @@
                 <input class="submit" type="submit" value="Войти">
             </form>
             <div class="redirect_registration">
-                <span>Нет аккаунта? <a th:href="@{/registration}">Регистрация</a></span>
+                <span>Нет аккаунта? <a th:href="@{/registration/select_role}">Регистрация</a></span>
             </div>
         </div>
     </main>

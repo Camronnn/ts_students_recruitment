@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Role</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/selection_form.css}">
+</head>
+<body>
+    <div class="select">
+        <div><a th:href="@{/registration/student}">Студент</a></div>
+        <div><a th:href="@{/registration/hrManager}">Менеджер</a></div>
+        <div><a th:href="@{/registration/director}">Директор отдления</a></div>
+    </div>
+</body>
+</html>

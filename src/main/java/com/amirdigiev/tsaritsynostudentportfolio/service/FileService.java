@@ -1,6 +1,7 @@
 package com.amirdigiev.tsaritsynostudentportfolio.service;
 
 import com.amirdigiev.tsaritsynostudentportfolio.model.User;
+import com.amirdigiev.tsaritsynostudentportfolio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public class FileService {
         this.userService = userService;
     }
 
-    public String uploadAvatar(MultipartFile img, Path directory) throws IOException {
+    public String uploadImg(MultipartFile img, Path directory) throws IOException {
         try {
             checkDirectoryExist(directory.toString());
         } catch (IOException e) {
@@ -36,13 +37,12 @@ public class FileService {
             return img.getOriginalFilename();
         }
 
-        return "Картинка пустая, или расширение не поддерживается";
+        return null;
     }
 
     public void setDefaultAvatar() {
         User currentUser = userService.getAnAuthorizedUser();
-
-        if(currentUser.getAvatar() == null) {
+        if (currentUser.getAvatar() == null || currentUser.getAvatar().equals("")) {
             userService.updateAvatarOfCurrentUser("default_avatar.png");
         }
     }
@@ -56,6 +56,8 @@ public class FileService {
     }
 
     private boolean checkImgExpansion(String filename) {
-        return filename.endsWith("png") || filename.endsWith("jpg") || filename.endsWith("gif");
+        return  filename.endsWith("png") ||
+                filename.endsWith("jpg") ||
+                filename.endsWith("gif");
     }
 }

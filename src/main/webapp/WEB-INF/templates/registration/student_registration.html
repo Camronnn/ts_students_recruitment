@@ -10,9 +10,11 @@
 </head>
 <body>
     <main>
-        <div class="heading"><h1>Регистрация</h1></div>
+        <div class="heading">
+            <h1>Регистрация</h1>
+        </div>
         <div class="registr_block">
-            <form method="post" th:action="@{/registration}" th:object="${newUser}">
+            <form method="post" th:action="@{/registration/student}" th:object="${newStudent}">
                 <div class="username">
                     <label for="username">Имя пользователя:<input id="username" type="text" th:field="*{username}"></label>
                 </div>

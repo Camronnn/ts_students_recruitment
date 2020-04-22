@@ -1,23 +1,28 @@
 package com.amirdigiev.tsaritsynostudentportfolio.model;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
-@Entity
-@Table(name = "usr", schema = "public")
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails, Serializable {
+@Entity
+@Table(name = "usr", schema = "public")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +42,6 @@ public class User implements UserDetails, Serializable {
     private String hometown;
     private String number;
     private String mail;
-    private int rating;
     private String avatar;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -46,7 +50,7 @@ public class User implements UserDetails, Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
+    private Set<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
