@@ -6,35 +6,53 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "director", schema = "public")
-@Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Director extends User implements Serializable {
+public class Director implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String department;
 
-    @Builder
-    public Director(Long id,
-                    String username,
-                    String password,
-                    String matchingPassword,
-                    String name,
-                    String surname,
-                    String patronymic,
-                    LocalDate birthday,
-                    String hometown,
-                    String number,
-                    String mail,
-                    String avatar,
-                    Set<Role> roles,
-                    String department) {
-        super(id, username, password, matchingPassword, name, surname, patronymic, birthday, hometown, number, mail, avatar, roles);
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Director(String department, User user) {
         this.department = department;
+        this.user = user;
+        this.user.setRole(RoleEnum.ROLE_DIRECTOR.getTypeRole());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Director)) return false;
+        Director director = (Director) o;
+        return Objects.equals(id, director.id) &&
+                Objects.equals(department, director.department) &&
+                Objects.equals(user, director.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, department, user);
+    }
+
+    @Override
+    public String toString() {
+        return "Director{" +
+                "id=" + id +
+                ", department='" + department + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

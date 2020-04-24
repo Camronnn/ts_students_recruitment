@@ -2,43 +2,71 @@ package com.amirdigiev.tsaritsynostudentportfolio.model;
 
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
 @Table(name = "student", schema = "public")
-@Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class Student extends User implements Serializable {
+public class Student implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String groupNumber;
     private String faculty;
     private Integer rating;
 
-    @Builder
-    public Student(Long id,
-                   String username,
-                   String password,
-                   String matchingPassword,
-                   String name,
-                   String surname,
-                   String patronymic,
-                   LocalDate birthday,
-                   String hometown,
-                   String number,
-                   String mail,
-                   String avatar,
-                   Set<Role> roles,
-                   String faculty,
-                   Integer rating) {
-        super(id, username, password, matchingPassword, name, surname, patronymic, birthday, hometown, number, mail, avatar, roles);
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Student(String faculty,
+                   Integer rating,
+                   String groupNumber,
+                   User user) {
         this.faculty = faculty;
-        this.rating = rating;
+        this.rating = 0;
+        this.groupNumber = groupNumber;
+        this.user = user;
+        this.user.setRole(RoleEnum.ROLE_STUDENT.getTypeRole());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student student = (Student) o;
+        return Objects.equals(id, student.id) &&
+                Objects.equals(groupNumber, student.groupNumber) &&
+                Objects.equals(faculty, student.faculty) &&
+                Objects.equals(rating, student.rating) &&
+                Objects.equals(user, student.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                id,
+                groupNumber,
+                faculty,
+                rating,
+                user
+        );
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", groupNumber='" + groupNumber + '\'' +
+                ", faculty='" + faculty + '\'' +
+                ", rating=" + rating +
+                ", user=" + user +
+                '}';
     }
 }

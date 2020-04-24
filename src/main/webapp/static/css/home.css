@@ -84,7 +84,7 @@ body {
     float: left;
     margin-top: 5px;
     margin-left: 20px;
-    width: 250px;
+    width: 300px;
     height: 30px;
 }
 
@@ -174,7 +174,7 @@ body {
 
 .user_data .rating {
     float: right;
-    margin-top: -133px;
+    margin-top: -205px;
     margin-right: 10px;
 }
 
@@ -193,4 +193,67 @@ body {
     margin-top: -5px;
     width: 30px;
     height: 30px;
+}
+
+.user_data .director {
+    float: left;
+    margin-top: 10px;
+    margin-left: 25px;
+    width: 400px;
+    height: 30px;
+}
+
+.user_data .director img {
+    float: left;
+    margin-left: -5px;
+    width: 20px;
+    height: 20px;
+}
+
+.user_data .manager {
+    float: left;
+    margin-top: 10px;
+    margin-left: 25px;
+    width: 400px;
+    height: 30px;
+}
+
+.user_data .manager img {
+    float: left;
+    margin-top: -5px;
+    margin-left: -5px;
+    width: 20px;
+    height: 20px;
+}
+
+.user_data .group_number {
+    float: left;
+    margin-top: 5px;
+    margin-left: 45px;
+    width: 400px;
+    height: 30px;
+}
+
+.user_data .group_number img {
+    float: left;
+    margin-top: -5px;
+    margin-left: -30px;
+    width: 30px;
+    height: 30px;
+}
+
+.user_data .faculty {
+    float: left;
+    margin-top: 5px;
+    margin-left: 45px;
+    width: 400px;
+    height: 30px;
+}
+
+.user_data .faculty img {
+    float: left;
+    margin-top: -5px;
+    margin-left: -30px;
+    width: 25px;
+    height: 25px;
 }

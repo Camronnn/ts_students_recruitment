@@ -6,7 +6,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="../../static/css/home.css"/>
     <meta charset="UTF-8">
-    <title th:text="${id} + '/' + ${username}"></title>
+    <title th:text="${name} + ' ' + ${surname}"></title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
@@ -17,50 +17,73 @@
     <div th:replace="fragments/nav_panel :: nav_panel"></div>
     <header th:replace="fragments/header :: header"></header>
     <main th:object="${currentUser}">
-        <!--<div class="avatar_block">-->
-            <!--<img th:src="@{'/images/avatar/' + ${avatar}}" alt="аватар">-->
-        <!--</div>-->
-        <!--<div class="role" sec:authorize="hasRole('ROLE_STUDENT')">-->
-            <!--<span>Студент</span>-->
-        <!--</div>-->
-        <!--<div class="fullname">-->
-            <!--<span class="abbr">ФИО:</span>-->
-            <!--<div>-->
-                <!--<span class="surname" th:text="*{surname}"></span>-->
-                <!--<span class="name" th:text="*{name}"></span>-->
-                <!--<span class="patronymic" th:text="*{patronymic}"></span>-->
-            <!--</div>-->
-            <!--<img src="/images/home/fullname.png" alt="img">-->
-        <!--</div>-->
-        <!--<div class="user_data">-->
-            <!--<div>-->
-                <!--<div class="birthday">-->
-                    <!--<img src="/images/home/birthday.png" alt="birth">-->
-                    <!--<span>День рождения:</span>-->
-                    <!--<span th:text="*{#temporals.format(birthday, 'd MMMM, yyyy')}"></span>-->
-                <!--</div>-->
-                <!--<div class="hometown">-->
-                    <!--<img src="/images/home/hometown.png" alt="hometown">-->
-                    <!--<span>Родной город:</span>-->
-                    <!--<span th:text="*{hometown}"></span>-->
-                <!--</div>-->
-                <!--<div class="mail">-->
-                    <!--<img src="/images/home/mail.png" alt="mail">-->
-                    <!--<span>Почта:</span>-->
-                    <!--<span th:text="*{mail}"></span>-->
-                <!--</div>-->
-                <!--<div class="number">-->
-                    <!--<img src="/images/home/number.png" alt="number">-->
-                    <!--<span>Ном. телефона:</span>-->
-                    <!--<span th:text="*{number}"></span>-->
-                <!--</div>-->
-                <!--<div class="rating" sec:authorize="hasRole('ROLE_USER')">-->
-                    <!--<span>Рейтинг:</span>-->
-                    <!--<span th:text="*{rating}"></span>-->
-                    <!--<img src="/images/home/star.png" alt="star">-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="avatar_block">
+            <img th:src="@{'/images/avatar/' + ${currentUser.avatar}}" alt="аватар">
+        </div>
+        <div class="role">
+            <span th:text="*{role}"></span>
+        </div>
+        <div class="fullname">
+            <span style="font-weight: bold" class="abbr">ФИО:</span>
+            <div style="width: 400px">
+                <span class="surname" th:text="*{surname}"></span>
+                <span class="name" th:text="*{name}"></span>
+                <span class="patronymic" th:text="*{patronymic}"></span>
+            </div>
+            <img src="/images/home/fullname.png" alt="img">
+        </div>
+        <div class="user_data">
+            <div>
+                <div class="birthday">
+                    <img src="/images/home/birthday.png" alt="birth">
+                    <span style="font-weight: bold">День рождения:</span>
+                    <span th:text="*{#temporals.format(birthday, 'd MMMM, yyyy')}"></span>
+                </div>
+                <div class="hometown">
+                    <img src="/images/home/hometown.png" alt="hometown">
+                    <span style="font-weight: bold">Родной город:</span>
+                    <span th:text="*{hometown}"></span>
+                </div>
+                <div class="mail">
+                    <img src="/images/home/mail.png" alt="mail">
+                    <span style="font-weight: bold">Почта:</span>
+                    <span th:text="*{mail}"></span>
+                </div>
+                <div class="number">
+                    <img src="/images/home/number.png" alt="number">
+                    <span style="font-weight: bold">Ном. телефона:</span>
+                    <span th:text="*{number}"></span>
+                </div>
+
+                <div th:if="*{role == 'STUDENT'}" class="group_number">
+                    <img src="/images/home/group.png" alt="group">
+                    <span style="font-weight: bold;">Номер группы:</span>
+                    <span th:text="${groupNumber} ?: 'Не указан'"></span>
+                </div>
+                <div th:if="*{role == 'STUDENT'}" class="faculty">
+                    <img src="/images/home/faculty.png" alt="faculty">
+                    <span style="font-weight: bold">Факультет:</span>
+                    <span th:text="${faculty} ?: 'Не указан'"></span>
+                </div>
+                <div th:if="*{role == 'STUDENT'}" class="rating">
+                    <span style="font-weight: bold">Рейтинг:</span>
+                    <span th:text="${rating}"></span>
+                    <img src="/images/home/star.png" alt="star">
+                </div>
+
+                <div th:if="*{role == 'DIRECTOR'}" class="director">
+                    <img src="/images/home/department.png" alt="department">
+                    <span style="font-weight: bold; margin-left: 5px">Отделение:</span>
+                    <span th:text="${department} ?: 'Не указано'"></span>
+                </div>
+
+                <div th:if="*{role == 'MANAGER'}" class="manager">
+                    <img src="/images/home/company.png" alt="company">
+                    <span style="font-weight: bold; margin-left: 5px;">Компания:</span>
+                    <span th:text="${company} ?: 'Не указана'"></span>
+                </div>
+            </div>
+        </div>
     </main>
     <footer th:replace="fragments/footer :: footer"></footer>
 </body>

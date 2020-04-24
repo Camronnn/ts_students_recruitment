@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/registration.css}">
+</head>
+<body>
+    <main>
+        <div class="heading">
+            <h1>Регистрация</h1>
+        </div>
+        <div class="registr_block">
+            <form method="post" th:action="@{/registration}" th:object="${newUser}">
+                <div class="username">
+                    <label for="username">Имя пользователя:<input th:field="*{username}" id="username" type="text"></label>
+                </div>
+                <div class="password">
+                    <label for="password">Пароль:<input th:field="*{password}" id="password" type="password"></label>
+                </div>
+                <div class="matching">
+                    <label for="matching">Подтверждение пароля:<input th:field="*{matchingPassword}" id="matching" type="password"></label>
+                </div>
+                <div class="surname">
+                    <label for="surname">Фамилия:<input th:field="*{surname}" id="surname" type="text"></label>
+                </div>
+                <div class="name">
+                    <label for="name">Имя:<input th:field="*{name}" id="name" type="text"></label>
+                </div>
+                <div class="patronymic">
+                    <label for="patronymic">Отчество:<input th:field="*{patronymic}" id="patronymic" type="text"></label>
+                </div>
+                <div class="birthday">
+                    <label for="birthday">День рождения:<input th:field="*{birthday}" id="birthday" type="date"></label>
+                </div>
+                <div class="mail">
+                    <label for="mail">Эл.почта:<input th:field="*{mail}" id="mail" type="email"></label>
+                </div>
+                <div class="hometown">
+                    <label for="hometown">Город:<input th:field="*{hometown}" id="hometown" type="text"></label>
+                </div>
+                <div class="number">
+                    <label for="number">Номер тел.:<input th:field="*{number}" id="number" type="text"></label>
+                </div>
+                <div class="select_role">
+                    <select th:field="*{role}">
+                        <option th:value="'STUDENT'" th:text="Student"></option>
+                        <option th:value="'MANAGER'" th:text="Manager"></option>
+                        <option th:value="'DIRECTOR'" th:text="Director"></option>
+                        <option th:value="'MODERATOR'" th:text="Moderator"></option>
+                        <option th:value="'ADMIN'" th:text="Admin"></option>
+                    </select>
+                </div>
+                <button class="submit" type="submit">Зарегистрироваться</button>
+            </form>
+            <div class="redirect_login">
+                <span>Уже есть аккаунт? <a th:href="@{/login}">Войти</a></span>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+</body>
+</html>
