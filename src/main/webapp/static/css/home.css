@@ -70,6 +70,16 @@ body {
     margin-left: 390px;
 }
 
+.delete_button {
+    float: left;
+    margin-top: 30px;
+    margin-left: 10px;
+    width: 250px;
+    height: 40px;
+    box-shadow: 0 0 1px 0;
+    font-size: 15px;
+}
+
 .user_data {
     float: left;
     margin-top: 10px;
@@ -256,4 +266,93 @@ body {
     margin-left: -30px;
     width: 25px;
     height: 25px;
+}
+
+.certificate_table {
+    float: left;
+    margin-top: 20px;
+    margin-left: 30px;
+    width: 1100px;
+    min-height: 400px;
+    background-color: gainsboro;
+    box-shadow: 0 0 1px 0;
+}
+
+.certificate_table .title {
+    width: 100%;
+    height: 50px;
+    background-color: CornflowerBlue;
+    box-shadow: 0 0 2px 0;
+}
+
+.certificate_table .title div {
+    float: left;
+    margin-top: 10px;
+    margin-left: 480px;
+    width: 100px;
+    height: 20px;
+    color: snow;
+    font-size: x-large;
+}
+
+.certificate_table .title a {
+    float: right;
+    width: 25px;
+    height: 25px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.certificate_table .title a img {
+    width: 30px;
+    height: 30px;
+}
+
+.certificate_table .empty_list {
+    position: absolute;
+    top: 660px;
+    left: 420px;
+    width: 600px;
+    height: 30px;
+    color: black;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.certificate_table .all_certificates .certificate {
+    float: left;
+    width: 250px;
+    height: 320px;
+    border: 1px solid gray;
+    box-shadow: 0 0 2px 0;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.certificate_table .all_certificates .certificate .competency {
+    display: block;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.certificate_table .all_certificates .certificate img {
+    width: 230px;
+    height: 230px;
+    margin-left: 10px;
+    margin-top: 10px;
+    border: 2px solid silver;
+}
+
+.certificate_table .all_certificates .certificate .delete {
+    float: left;
+    width: 233px;
+    height: 30px;
+    margin-left: 10px;
+    color: snow;
+    background-color: #ba2b2b;
+    box-shadow: 0 0 3px 0;
+    border: none;
 }

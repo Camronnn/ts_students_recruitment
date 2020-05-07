@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate add form</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/certificate_add_form.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <div class="add_form">
+            <form method="post" th:action="@{/add_certificate}" th:object="${certificate}" enctype="multipart/form-data">
+                <label>Назв. компетенции:
+                    <input th:field="*{competency}" type="text" name="competency">
+                </label>
+                <input type="file" name="certificateImg">
+                <input type="submit" value="Загрузить">
+            </form>
+        </div>
+    </main>
+</body>
+</html>

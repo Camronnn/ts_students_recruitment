@@ -1,13 +1,11 @@
 package com.amirdigiev.tsaritsynostudentportfolio.config;
 
-import com.amirdigiev.tsaritsynostudentportfolio.service.UserService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,105 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SuppressWarnings("Duplicates")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Configuration
-//    @Order(1)
-//    public static class StudentSecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//        private final StudentService studentService;
-//        private final BCryptPasswordEncoder bCryptPasswordEncoder;
-//
-//        @Autowired
-//        public StudentSecurityConfig(@Qualifier("studentService") StudentService studentService,
-//                                     BCryptPasswordEncoder bCryptPasswordEncoder) {
-//            this.studentService = studentService;
-//            this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-//        }
-//
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http.requestMatchers()
-//                        .antMatchers("/login/student", "/registration/student")
-//                    .and()
-//                        .authorizeRequests()
-//                        .anyRequest().authenticated()
-//
-//                    .and()
-//                        .formLogin().permitAll()
-//                            .loginPage("/login/student")
-//                            .usernameParameter("username")
-//                            .passwordParameter("password")
-//                            .defaultSuccessUrl("/home", true)
-//
-//                    .and()
-//                        .logout()
-//                            .logoutUrl("/logout")
-//                            .logoutSuccessUrl("/login/student")
-//                            .invalidateHttpSession(true)
-//                            .deleteCookies("JSESSIONID");
-//
-//            http.headers()
-//                        .cacheControl().disable()
-//                    .and()
-//                        .csrf().disable();
-//        }
-//
-//        @Override
-//        public void configure(WebSecurity web) throws Exception {
-//            web.ignoring().antMatchers("/static/**", "/images/**");
-//        }
-//
-//        @Override
-//        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//            auth.userDetailsService(studentService).passwordEncoder(bCryptPasswordEncoder);
-//        }
-//
-//        @Bean
-//        public AuthenticationManager authenticationManager() throws Exception {
-//            return super.authenticationManager();
-//        }
-//    }
-//
-//    @Configuration
-//    public static class DirectorSecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//        private final DirectorService directorService;
-//        private final BCryptPasswordEncoder bCryptPasswordEncoder;
-//
-//        @Autowired
-//        public DirectorSecurityConfig(@Qualifier("directorService") DirectorService directorService,
-//                                      BCryptPasswordEncoder bCryptPasswordEncoder) {
-//            this.directorService = directorService;
-//            this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-//        }
-//
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http.requestMatchers()
-//                        .antMatchers("/login/director", "/registration/director")
-//                    .and()
-//                        .authorizeRequests()
-//                        .anyRequest().authenticated()
-//
-//                    .and()
-//                        .formLogin().permitAll()
-//                            .loginPage("/login/director_login")
-//                            .usernameParameter("username")
-//                            .passwordParameter("password")
-//                            .defaultSuccessUrl("/home", true)
-//                    .and()
-//                        .logout()
-//                            .logoutUrl("/logout")
-//                            .logoutSuccessUrl("/login/director_login")
-//                            .invalidateHttpSession(true)
-//                            .deleteCookies("JSESSIONID");
-//
-//            http.headers()
-//                    .cacheControl().disable()
-//                    .and()
-//                    .csrf().disable();
-//        }
-//    }
-
     private final UserService userService;
 
     @Autowired
@@ -131,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                    .antMatchers("/select_role", "/registration").permitAll()
+                    .antMatchers("/select_role", "/registration").hasAuthority("ADMIN")
+                    .antMatchers("/confirm_certificates").hasAuthority("ADMIN")
                     .anyRequest().authenticated()
 
                 .and()
@@ -147,10 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID");
 
-        http.headers()
-                .cacheControl().disable()
-                .and()
-                .csrf().disable();
+                http.headers()
+                        .cacheControl().disable()
+                        .and()
+                        .csrf().disable();
     }
 
     @Override

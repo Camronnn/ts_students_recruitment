@@ -8,9 +8,8 @@
     <meta charset="UTF-8">
     <title th:text="${name} + ' ' + ${surname}"></title>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/footer.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/home.css}">
 </head>
 <body>
@@ -32,6 +31,9 @@
             </div>
             <img src="/images/home/fullname.png" alt="img">
         </div>
+        <form method="post" th:action="@{/delete_avatar}" class="delete_avatar">
+            <button type="submit" class="delete_button">Удалить фото</button>
+        </form>
         <div class="user_data">
             <div>
                 <div class="birthday">
@@ -70,7 +72,6 @@
                     <span th:text="${rating}"></span>
                     <img src="/images/home/star.png" alt="star">
                 </div>
-
                 <div th:if="*{role == 'DIRECTOR'}" class="director">
                     <img src="/images/home/department.png" alt="department">
                     <span style="font-weight: bold; margin-left: 5px">Отделение:</span>
@@ -84,7 +85,26 @@
                 </div>
             </div>
         </div>
+        <div th:if="*{role == 'STUDENT'}" class="certificate_table">
+            <div class="title">
+                <div>Достижения</div>
+                <a th:href="@{/add_certificate}"><img src="/images/home/plus.png" alt="добавить"></a>
+            </div>
+            <div th:if="${certificates == null}" class="empty_list">
+                <span class="">Сертификаты или грамоты отсутствуют</span>
+            </div>
+            <div th:each="certificate : ${certificates}" class="all_certificates">
+                <div th:if="${certificate.approved} == true" class="certificate">
+                    <span class="competency">Компетенция:
+                        <span th:text="${certificate.competency}"></span>
+                    </span>
+                    <img th:src="@{'/images/certificate/' + ${certificate.certificateImage}}" alt="Сертификат">
+                    <form method="post" th:action="@{/delete_certificate/{id}(id=${certificate.id})}">
+                        <button type="submit" class="delete">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
-    <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

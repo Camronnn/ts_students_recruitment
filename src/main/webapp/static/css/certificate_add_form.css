@@ -1,0 +1,27 @@
+.add_form {
+    position: relative;
+    top: 100px;
+    left: 450px;
+    width: 380px;
+    height: 150px;
+    box-shadow: 0 0 2px 0;
+    background-color: snow;
+}
+
+.add_form form label input {
+    width: 110px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 25px;
+}
+
+.add_form form input:nth-child(2) {
+    margin-bottom: 20px;
+    margin-right: 25px;
+}
+
+.add_form form input:nth-child(3) {
+    margin-top: 5px;
+    width: 150px;
+    height: 30px;
+}

@@ -9,38 +9,64 @@
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/footer.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/edit.css}">
 </head>
 <body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
     <main>
+        <div class="heading">
+            <h1>Редактирование</h1>
+        </div>
         <div class="edit_form">
-            <form method="post" th:action="@{/home/edit}" enctype="multipart/form-data">
-                <div class="name">
-                    <label for="name"><input name="name" id="name" type="text"></label>
+            <form method="post" th:action="@{/edit}" th:object="${currentUser}" enctype="multipart/form-data">
+                <div class="username">
+                    <label for="username">
+                        Имя польз.:<input th:field="*{username}" name="username" id="username" type="text">
+                    </label>
+                </div>
+                <div class="password">
+                    <label for="password">
+                        Пароль:<input th:field="*{password}" name="password" id="password" type="password">
+                    </label>
+                </div>
+                <div class="matching">
+                    <label for="matching">
+                        Подвт. пароля:<input th:field="*{matchingPassword}" name="matchingPassword" id="matching" type="password">
+                    </label>
                 </div>
                 <div class="surname">
-                    <label for="surname"><input name="surname" type="text" id="surname"></label>
+                    <label for="surname">Фамилия:<input th:field="*{surname}" name="surname" id="surname" type="text"></label>
+                </div>
+                <div class="name">
+                    <label for="name">Имя:<input th:field="*{name}" name="name" id="name" type="text"></label>
                 </div>
                 <div class="patronymic">
-                    <label for="patronymic"><input name="patronymic" type="text" id="patronymic"></label>
+                    <label for="patronymic">Отчество:<input th:field="*{patronymic}" name="patronymic" id="patronymic" type="text"></label>
                 </div>
                 <div class="birthday">
-                    <label for="birthday"><input name="birthday" type="date" id="birthday"></label>
-                </div>
-                <div class="hometown">
-                    <label for="hometown"><input name="hometown" type="text" id="hometown"></label>
-                </div>
-                <div class="number">
-                    <label for="number"><input name="number" type="text" id="number"></label>
+                    <label for="birthday">День рождения:<input th:field="*{birthday}" name="birthday" id="birthday" type="date"></label>
                 </div>
                 <div class="mail">
-                    <label for="mail"><input name="mail" type="email" id="mail"></label>
+                    <label for="mail">Эл.почта:<input th:field="*{mail}" name="mail" id="mail" type="email"></label>
                 </div>
-                <div class="avatar">
-                    <label for="avatar"><input name="avatar" type="file" id="avatar"></label>
+                <div class="hometown">
+                    <label for="hometown">Город:<input th:field="*{hometown}" name="hometown" id="hometown" type="text"></label>
                 </div>
-                <div class="submit">
-                    <input name="submit" type="submit" value="Отредактировать">
+                <div class="number">
+                    <label for="number">Номер тел.:<input th:field="*{number}" name="number" id="number" type="text"></label>
                 </div>
+                <div class="avatar" style="margin-top: 10px">
+                    <label for="avatar">
+                        <input type="file" name="avatar" id="avatar">
+                    </label>
+                </div>
+                <div th:if="">
+                    <label>
+                        <input>
+                    </label>
+                </div>
+                <button class="submit" type="submit">Отредактировать</button>
             </form>
         </div>
     </main>

@@ -18,10 +18,9 @@
         </div>
         <ul class="list_links">
             <li><a th:href="@{/home}"><img src="/images/nav_panel/home.png" alt="home"></a></li>
-            <li><a href="#"><img src="/images/nav_panel/news.png" alt="news"></a></li>
-            <li><a href="#"><img src="/images/nav_panel/students.png" alt="students"></a></li>
-            <li><a href="#"><img src="/images/nav_panel/events.png" alt="events"></a></li>
-            <li><a href="#"><img src="/images/nav_panel/contacts.png" alt="contacts"></a></li>
+            <li th:if="${currentUser.role} == 'ADMIN'"><a th:href="@{/confirm_certificates}"><img src="/images/nav_panel/news.png" alt="event"></a></li>
+            <li th:if="${currentUser.role} == 'ADMIN'"><a th:href="@{/registration}"><img src="/images/nav_panel/add_user.png" alt="students"></a></li>
+            <!--<li><a href="#"><img src="/images/nav_panel/events.png" alt="events"></a></li>-->
         </ul>
     </nav>
 </body>

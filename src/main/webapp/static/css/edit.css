@@ -1,0 +1,47 @@
+.heading {
+    position: absolute;
+    top: 120px;
+    left: 530px;
+}
+
+.edit_form {
+    position: absolute;
+    top: 170px;
+    left: 450px;
+    width: 400px;
+    height: 480px;
+    background-color: snow;
+    text-align: center;
+    border-top: 30px solid crimson;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.edit_form form .avatar {
+}
+
+.edit_form form {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    text-align: right;
+}
+
+.edit_form form div {
+    margin-bottom: 10px;
+    margin-left: -10px;
+}
+
+.edit_form form div input {
+    margin-left: 10px;
+}
+
+.edit_form form .birthday input {
+    width: 160px;
+}
+
+.edit_form form button {
+    width: 165px;
+    height: 30px;
+}

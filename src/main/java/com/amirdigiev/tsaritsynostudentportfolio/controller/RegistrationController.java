@@ -1,9 +1,15 @@
 package com.amirdigiev.tsaritsynostudentportfolio.controller;
 
-import com.amirdigiev.tsaritsynostudentportfolio.model.*;
+import com.amirdigiev.tsaritsynostudentportfolio.component.Converter;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.admin.AdminService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.director.DirectorService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.manager.HrManagerService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.moderator.ModeratorService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.student.StudentService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.user.UserService;
 import com.amirdigiev.tsaritsynostudentportfolio.model.dto.SuperUserDto;
-import com.amirdigiev.tsaritsynostudentportfolio.service.*;
-import com.amirdigiev.tsaritsynostudentportfolio.service.security.SecurityService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.security.SecurityService;
+import com.amirdigiev.tsaritsynostudentportfolio.model.role.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,7 +69,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String registerDirectorAccount(@ModelAttribute("newUser") @Valid SuperUserDto newUser,
+    public String registerAccount(@ModelAttribute("newUser") @Valid SuperUserDto newUser,
                                           BindingResult bindingResult,
                                           Model model)
     {
@@ -86,6 +92,6 @@ public class RegistrationController {
         securityService.autoLogin(newUser.getUsername(), newUser.getMatchingPassword());
         log.info("New user registered: " + newUser.toString());
 
-        return "redirect:/login";
+        return "redirect:/home";
     }
 }

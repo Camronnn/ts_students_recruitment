@@ -1,0 +1,73 @@
+.certificate_table {
+    float: left;
+    margin-top: 20px;
+    margin-left: 30px;
+    width: 1100px;
+    min-height: 500px;
+    background-color: gainsboro;
+    box-shadow: 0 0 1px 0;
+}
+
+.certificate_table .title {
+    width: 100%;
+    height: 50px;
+    background-color: CornflowerBlue;
+    box-shadow: 0 0 2px 0;
+}
+
+.certificate_table .title div {
+    float: left;
+    margin-top: 10px;
+    margin-left: 400px;
+    width: 400px;
+    height: 30px;
+    color: snow;
+    font-size: x-large;
+}
+
+.certificate_table .all_certificates .certificate {
+    float: left;
+    width: 250px;
+    height: 380px;
+    border: 1px solid gray;
+    box-shadow: 0 0 2px 0;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.certificate_table .all_certificates .certificate .fullname {
+    float: left;
+    display: block;
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.certificate_table .all_certificates .certificate .competency {
+    float: left;
+    display: block;
+    color: black;
+    margin-top: 2px;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.certificate_table .all_certificates .certificate img {
+    width: 230px;
+    height: 250px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.button {
+    float: left;
+    width: 105px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 13px;
+    box-shadow: 0 0 2px 0;
+}

@@ -24,13 +24,13 @@
         <div class="registr_block">
             <form method="post" th:action="@{/registration}" th:object="${newUser}">
                 <div class="username">
-                    <label for="username">Имя пользователя:<input th:field="*{username}" id="username" type="text"></label>
+                    <label for="username">Имя польз.:<input th:field="*{username}" id="username" type="text"></label>
                 </div>
                 <div class="password">
                     <label for="password">Пароль:<input th:field="*{password}" id="password" type="password"></label>
                 </div>
                 <div class="matching">
-                    <label for="matching">Подтверждение пароля:<input th:field="*{matchingPassword}" id="matching" type="password"></label>
+                    <label for="matching">Подтв. пароля:<input th:field="*{matchingPassword}" id="matching" type="password"></label>
                 </div>
                 <div class="surname">
                     <label for="surname">Фамилия:<input th:field="*{surname}" id="surname" type="text"></label>

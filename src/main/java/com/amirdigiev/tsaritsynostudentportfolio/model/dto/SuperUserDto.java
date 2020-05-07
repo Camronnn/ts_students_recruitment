@@ -1,15 +1,11 @@
 package com.amirdigiev.tsaritsynostudentportfolio.model.dto;
 
-import com.amirdigiev.tsaritsynostudentportfolio.model.Director;
-import com.amirdigiev.tsaritsynostudentportfolio.model.HrManager;
-import com.amirdigiev.tsaritsynostudentportfolio.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
 

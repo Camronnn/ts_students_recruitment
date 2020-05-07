@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/confirm.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <div th:if="${role == 'ADMIN'}" class="certificate_table">
+            <div class="title">
+                <div>Подвтерждение сертификатов</div>
+            </div>
+            <div th:each="certificate : ${certificates}" class="all_certificates">
+                <div th:if="${certificate.approved} == false" class="certificate">
+                    <span class="fullname">Студент:
+                        <span th:text="${certificate.student.user.name}"></span>
+                        <span th:text="${certificate.student.user.surname}"></span>
+                    </span>
+                    <span class="competency">
+                        Компетенция:<span th:text="${certificate.competency}"></span>
+                    </span>
+                    <img th:src="@{'/images/certificate/' + ${certificate.certificateImage}}" alt="Сертификат">
+                    <form method="post" th:action="@{/confirm/{id}(id=${certificate.id})}">
+                        <button type="submit" class="button">Подтвердить</button>
+                    </form>
+                    <form method="post" th:action="@{/delete/{id}(id=${certificate.id})}">
+                        <button style="background-color: #ba2b2b; border: none; color: white" type="submit" class="button">
+                            Удалить
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
