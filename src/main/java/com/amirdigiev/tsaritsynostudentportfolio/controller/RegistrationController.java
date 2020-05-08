@@ -44,7 +44,8 @@ public class RegistrationController {
                                   Converter converter,
                                   AdminService adminService,
                                   ModeratorService moderatorService,
-                                  HrManagerService hrManagerService) {
+                                  HrManagerService hrManagerService)
+    {
         this.securityService = securityService;
         this.studentService = studentService;
         this.directorService = directorService;

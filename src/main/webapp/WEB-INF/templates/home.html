@@ -20,7 +20,10 @@
             <img th:src="@{'/images/avatar/' + ${currentUser.avatar}}" alt="аватар">
         </div>
         <div class="role">
-            <span th:text="*{role}"></span>
+            <span th:if="*{role == 'STUDENT'}" th:text="'Студент'"></span>
+            <span th:if="*{role == 'ADMIN'}" th:text="'Админ'"></span>
+            <span th:if="*{role == 'MODERATOR'}" th:text="'Модератор'"></span>
+            <span th:if="*{role == 'DIRECTOR'}" th:text="'Директор'"></span>
         </div>
         <div class="fullname">
             <span style="font-weight: bold" class="abbr">ФИО:</span>
@@ -31,9 +34,6 @@
             </div>
             <img src="/images/home/fullname.png" alt="img">
         </div>
-        <form method="post" th:action="@{/delete_avatar}" class="delete_avatar">
-            <button type="submit" class="delete_button">Удалить фото</button>
-        </form>
         <div class="user_data">
             <div>
                 <div class="birthday">
@@ -85,6 +85,12 @@
                 </div>
             </div>
         </div>
+        <a th:if="*{role == 'STUDENT'}" th:href="@{/docx_form}" class="redirect">
+            <button class="redirect_button">Word-портфолио</button>
+        </a>
+        <form method="post" th:action="@{/delete_avatar}" class="delete_avatar">
+            <button type="submit" class="delete_button">Удалить фото</button>
+        </form>
         <div th:if="*{role == 'STUDENT'}" class="certificate_table">
             <div class="title">
                 <div>Достижения</div>

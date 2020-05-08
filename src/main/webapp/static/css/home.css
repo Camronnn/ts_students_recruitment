@@ -5,7 +5,7 @@ body {
 .avatar_block {
     float: left;
     margin-top: 30px;
-    margin-left: 30px;
+    margin-left: 150px;
     width: 300px;
     height: 300px;
     background-color: snow;
@@ -70,12 +70,26 @@ body {
     margin-left: 390px;
 }
 
+.redirect {
+    display: block;
+    float: left;
+    margin-top: 260px;
+    margin-left: -500px;
+}
+
+.redirect_button {
+    width: 240px;
+    height: 50px;
+    box-shadow: 0 0 1px 0;
+    font-size: 15px;
+}
+
 .delete_button {
     float: left;
-    margin-top: 30px;
-    margin-left: 10px;
+    margin-top: 260px;
+    margin-left: -250px;
     width: 250px;
-    height: 40px;
+    height: 50px;
     box-shadow: 0 0 1px 0;
     font-size: 15px;
 }
@@ -85,7 +99,7 @@ body {
     margin-top: 10px;
     margin-left: 30px;
     width: 500px;
-    height: 300px;
+    height: 240px;
     background-color: snow;
     box-shadow: 0 0 2px 0;
 }
@@ -270,9 +284,9 @@ body {
 
 .certificate_table {
     float: left;
-    margin-top: 20px;
-    margin-left: 30px;
-    width: 1100px;
+    margin-top: 60px;
+    margin-left: 150px;
+    width: 830px;
     min-height: 400px;
     background-color: gainsboro;
     box-shadow: 0 0 1px 0;
@@ -288,7 +302,7 @@ body {
 .certificate_table .title div {
     float: left;
     margin-top: 10px;
-    margin-left: 480px;
+    margin-left: 350px;
     width: 100px;
     height: 20px;
     color: snow;
@@ -326,7 +340,7 @@ body {
     border: 1px solid gray;
     box-shadow: 0 0 2px 0;
     margin-top: 20px;
-    margin-left: 15px;
+    margin-left: 18px;
 }
 
 .certificate_table .all_certificates .certificate .competency {

@@ -1,11 +1,17 @@
 package com.amirdigiev.tsaritsynostudentportfolio.controller;
 
+import com.amirdigiev.tsaritsynostudentportfolio.component.GeneratorDocxFile;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.admin.AdminService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.certificate.CertificateService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.director.DirectorService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.manager.HrManagerService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.moderator.ModeratorService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.student.StudentService;
 import com.amirdigiev.tsaritsynostudentportfolio.model.*;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.file.FileService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.user.UserService;
 import com.amirdigiev.tsaritsynostudentportfolio.model.role.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,14 +26,20 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Slf4j
 @Controller
 public class HomeController {
 
     private final UserService userService;
     private final StudentService studentService;
+    private final DirectorService directorService;
+    private final AdminService adminService;
+    private final HrManagerService hrManagerService;
+    private final ModeratorService moderatorService;
     private final FileService fileService;
     private final CertificateService certificateService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final GeneratorDocxFile generatorDocxFile;
 
     @Value("${application.avatar-folder}")
     private String avatarFolder;
@@ -40,17 +52,31 @@ public class HomeController {
                           FileService fileService,
                           BCryptPasswordEncoder passwordEncoder,
                           StudentService studentService,
-                          CertificateService certificateService) {
+                          CertificateService certificateService,
+                          GeneratorDocxFile generatorDocxFile,
+                          DirectorService directorService,
+                          AdminService adminService,
+                          HrManagerService hrManagerService,
+                          ModeratorService moderatorService)
+    {
         this.userService = userService;
         this.fileService = fileService;
         this.passwordEncoder = passwordEncoder;
         this.studentService = studentService;
         this.certificateService = certificateService;
+        this.generatorDocxFile = generatorDocxFile;
+        this.directorService = directorService;
+        this.adminService = adminService;
+        this.hrManagerService = hrManagerService;
+        this.moderatorService = moderatorService;
     }
 
     @GetMapping("/home")
     public String getHomePage(Model model) {
         User currentUser = userService.getAnAuthorizedUser();
+        log.info(currentUser.getUsername() + " switched to /home");
+        log.info(currentUser.getUsername() + " is a " + currentUser.getRole());
+
         Object userRole = userService.defineRoleByUserId();
 
         if (userRole instanceof Student) {
@@ -59,12 +85,18 @@ public class HomeController {
             model.addAttribute("groupNumber", student.getGroupNumber());
             model.addAttribute("rating", student.getRating());
             model.addAttribute("certificates", student.getCertificates());
+
+//            try {
+//                generatorDocxFile.createPortfolio(student);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
 
         if (userRole instanceof Admin) {
-           Admin admin = (Admin) userRole;
-           List<Certificate> certificates = certificateService.findAll();
-           model.addAttribute("certificates", certificates);
+            Admin admin = (Admin) userRole;
+            List<Certificate> certificates = certificateService.findAll();
+            model.addAttribute("certificates", certificates);
         }
 
         if (userRole instanceof Director) {
@@ -90,6 +122,7 @@ public class HomeController {
     @GetMapping("/edit")
     public String getEditUserDataForm(Model model) {
         User currentUser = userService.getAnAuthorizedUser();
+        log.info(currentUser.getUsername() + " switched to /edit");
 
         model.addAttribute("currentUser", currentUser);
 
@@ -111,24 +144,56 @@ public class HomeController {
     }
 
     @PostMapping("/edit")
-    public String submitEditUserDataForm(@ModelAttribute User currentUser,
+    public String submitEditUserDataForm(@ModelAttribute("currentUser") User currentUser,
+                                         @ModelAttribute("student") Student student,
+                                         @ModelAttribute("director") Director director,
+                                         @ModelAttribute("manager") HrManager manager,
                                          MultipartFile avatar,
-                                         Model model) throws IOException {
+                                         Model model) throws IOException
+    {
         fileService.uploadImg(avatar, Paths.get(avatarFolder));
         currentUser.setAvatar(avatar.getOriginalFilename());
+
+        if (currentUser.getRole().equals("STUDENT")) {
+            student.setUser(currentUser);
+            studentService.add(student);
+            log.info("Student " + student.getId() + " edited");
+        }
+
+        if (currentUser.getRole().equals("DIRECTOR")) {
+            director.setUser(currentUser);
+            directorService.add(director);
+            log.info("Director " + director.getId() + " edited");
+        }
+
+        if (currentUser.getRole().equals("MANAGER")) {
+            manager.setUser(currentUser);
+            hrManagerService.add(manager);
+            log.info("Manager " + manager.getId() + " edited");
+        }
+
         userService.add(currentUser);
+        log.info("Current user " + currentUser.getUsername() + " edited");
 
         return "redirect:/home";
     }
 
+    @GetMapping("/docx_form")
+    public String getCreateDocxForm(Model model) {
+        log.info(userService.getAnAuthorizedUser().getUsername() + " switched to /docx_form");
+        return "docx_form";
+    }
+
     @PostMapping("/delete_avatar")
     public String deleteAvatar() {
+        log.info(userService.getAnAuthorizedUser().getUsername() + " delete avatar");
         fileService.deleteAvatar();
         return "redirect:/home";
     }
 
     @GetMapping("/add_certificate")
     public String getCertificateAddForm(Model model) {
+        log.info(userService.getAnAuthorizedUser().getUsername() + " switched to /add_certificates");
         model.addAttribute("certificate", new Certificate());
         return "certificate_add_form";
     }
@@ -136,8 +201,9 @@ public class HomeController {
     @PostMapping("/add_certificate")
     public String confirmAddingCertificate(@ModelAttribute("certificate") Certificate certificate,
                                            @RequestParam MultipartFile certificateImg) throws IOException {
-
+        log.info(userService.getAnAuthorizedUser().getUsername() + " switched to /add_certificate");
         certificate.setCertificateImage(fileService.uploadImg(certificateImg, Paths.get(certificateFolder)));
+        log.info("new certificate uploaded: " + certificateImg.getOriginalFilename());
 
         User currentUser = userService.getAnAuthorizedUser();
         if (currentUser.getRole().equals("STUDENT")) {
@@ -150,6 +216,7 @@ public class HomeController {
             }
         }
         certificateService.add(certificate);
+        log.info(userService.getAnAuthorizedUser().getUsername() + " added new certificate: " + certificate.getCompetency());
 
         return "redirect:/home";
     }
@@ -159,10 +226,12 @@ public class HomeController {
         Optional<Certificate> existingCertificate = certificateService.findById(id);
         Student student = existingCertificate.get().getStudent();
         studentService.decreaseRating(student.getId());
+        log.info("Student rating " + student.getUser().getUsername() + " decreased");
 
         existingCertificate.ifPresent(
                 certificate -> certificateService.deleteById(certificate.getId())
         );
+        log.info("Student " + student.getUser().getUsername() + " delete certificate with id: " + id);
 
         return "redirect:/home";
     }

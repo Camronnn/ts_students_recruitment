@@ -26,7 +26,7 @@
                         <span th:text="${certificate.student.user.surname}"></span>
                     </span>
                     <span class="competency">
-                        Компетенция:<span th:text="${certificate.competency}"></span>
+                        Компетенция: <span th:text="${certificate.competency}"></span>
                     </span>
                     <img th:src="@{'/images/certificate/' + ${certificate.certificateImage}}" alt="Сертификат">
                     <form method="post" th:action="@{/confirm/{id}(id=${certificate.id})}">

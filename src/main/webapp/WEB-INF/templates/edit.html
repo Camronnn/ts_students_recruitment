@@ -61,9 +61,22 @@
                         <input type="file" name="avatar" id="avatar">
                     </label>
                 </div>
-                <div th:if="">
-                    <label>
-                        <input>
+                <div th:if="*{role == 'STUDENT'}" th:object="${student}">
+                    <label for="group">
+                        Ном. группы:<input th:field="*{groupNumber}" name="group" id="group" type="text">
+                    </label>
+                    <label for="faculty">
+                        Факультет:<input th:field="*{faculty}" name="faculty" id="faculty" type="text">
+                    </label>
+                </div>
+                <div th:if="*{role == 'DIRECTOR'}" th:object="${director}">
+                    <label for="department">
+                        Отделение:<input th:field="*{department}" name="department" id="department" type="text">
+                    </label>
+                </div>
+                <div th:if="*{role == 'MANAGER'}" th:object="${manager}">
+                    <label for="company">
+                        Отделение:<input th:field="*{company}" name="company" id="company" type="text">
                     </label>
                 </div>
                 <button class="submit" type="submit">Отредактировать</button>
