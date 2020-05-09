@@ -96,6 +96,23 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public void update(User user) {
+        User currentUser = getAnAuthorizedUser();
+
+        currentUser.setUsername(user.getUsername());
+        currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        currentUser.setSurname(user.getSurname());
+        currentUser.setName(user.getName());
+        currentUser.setPatronymic(user.getPatronymic());
+        currentUser.setBirthday(user.getBirthday());
+        currentUser.setMail(user.getMail());
+        currentUser.setNumber(user.getNumber());
+        currentUser.setHometown(user.getHometown());
+        currentUser.setAvatar(user.getAvatar());
+
+        userRepository.save(currentUser);
+    }
+
     public void deleteById(Long id) {
         Optional<User> user = userRepository.findById(id);
         if(user.isPresent()) {

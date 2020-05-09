@@ -3,6 +3,7 @@ package com.amirdigiev.tsaritsynostudentportfolio.dao.student;
 
 import com.amirdigiev.tsaritsynostudentportfolio.dao.user.UserService;
 import com.amirdigiev.tsaritsynostudentportfolio.model.role.Student;
+import com.amirdigiev.tsaritsynostudentportfolio.model.role.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,20 @@ public class StudentService {
 
     public Student add(Student student) {
         return studentRepository.save(student);
+    }
+
+    public void update(Student updateStudent) {
+        User currentUser = userService.getAnAuthorizedUser();
+
+        List<Student> students = findAll();
+        for(Student student : students) {
+            if (student.getUser().getId().equals(currentUser.getId())) {
+                student.setFaculty(updateStudent.getFaculty());
+                student.setGroupNumber(updateStudent.getGroupNumber());
+                studentRepository.save(student);
+                break;
+            }
+        }
     }
 
     public void deleteById(Long id) {

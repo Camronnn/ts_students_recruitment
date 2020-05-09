@@ -13,7 +13,8 @@ public class CertificateService {
     private final CertificateRepository certificateRepository;
 
     @Autowired
-    public CertificateService(CertificateRepository certificateRepository) {
+    public CertificateService(CertificateRepository certificateRepository)
+    {
         this.certificateRepository = certificateRepository;
     }
 

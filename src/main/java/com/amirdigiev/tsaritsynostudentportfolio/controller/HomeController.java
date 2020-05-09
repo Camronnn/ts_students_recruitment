@@ -121,10 +121,10 @@ public class HomeController {
 
     @GetMapping("/edit")
     public String getEditUserDataForm(Model model) {
-        User currentUser = userService.getAnAuthorizedUser();
-        log.info(currentUser.getUsername() + " switched to /edit");
+        User editableUser = userService.getAnAuthorizedUser();
+        log.info(editableUser.getUsername() + " switched to /edit");
 
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("editableUser", editableUser);
 
         Object userRole = userService.defineRoleByUserId();
         if (userRole instanceof Student) {
@@ -144,36 +144,38 @@ public class HomeController {
     }
 
     @PostMapping("/edit")
-    public String submitEditUserDataForm(@ModelAttribute("currentUser") User currentUser,
+    public String submitEditUserDataForm(@ModelAttribute("editableUser") User editableUser,
                                          @ModelAttribute("student") Student student,
                                          @ModelAttribute("director") Director director,
                                          @ModelAttribute("manager") HrManager manager,
-                                         MultipartFile avatar,
+                                         @RequestParam MultipartFile img,
                                          Model model) throws IOException
     {
-        fileService.uploadImg(avatar, Paths.get(avatarFolder));
-        currentUser.setAvatar(avatar.getOriginalFilename());
+        User currentUser = userService.getAnAuthorizedUser();
+
+        fileService.uploadImg(img, Paths.get(avatarFolder));
+        editableUser.setAvatar(img.getOriginalFilename());
+        userService.update(editableUser);
 
         if (currentUser.getRole().equals("STUDENT")) {
-            student.setUser(currentUser);
-            studentService.add(student);
+            student.setUser(editableUser);
+            studentService.update(student);
             log.info("Student " + student.getId() + " edited");
         }
 
         if (currentUser.getRole().equals("DIRECTOR")) {
-            director.setUser(currentUser);
-            directorService.add(director);
+            director.setUser(editableUser);
+            directorService.update(director);
             log.info("Director " + director.getId() + " edited");
         }
 
         if (currentUser.getRole().equals("MANAGER")) {
-            manager.setUser(currentUser);
-            hrManagerService.add(manager);
+            manager.setUser(editableUser);
+            hrManagerService.update(manager);
             log.info("Manager " + manager.getId() + " edited");
         }
 
-        userService.add(currentUser);
-        log.info("Current user " + currentUser.getUsername() + " edited");
+        log.info("Current user " + editableUser.getUsername() + " edited");
 
         return "redirect:/home";
     }

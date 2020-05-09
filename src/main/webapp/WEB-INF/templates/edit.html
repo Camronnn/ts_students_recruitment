@@ -19,7 +19,7 @@
             <h1>Редактирование</h1>
         </div>
         <div class="edit_form">
-            <form method="post" th:action="@{/edit}" th:object="${currentUser}" enctype="multipart/form-data">
+            <form method="post" th:action="@{/edit}" th:object="${editableUser}" enctype="multipart/form-data">
                 <div class="username">
                     <label for="username">
                         Имя польз.:<input th:field="*{username}" name="username" id="username" type="text">
@@ -57,8 +57,8 @@
                     <label for="number">Номер тел.:<input th:field="*{number}" name="number" id="number" type="text"></label>
                 </div>
                 <div class="avatar" style="margin-top: 10px">
-                    <label for="avatar">
-                        <input type="file" name="avatar" id="avatar">
+                    <label for="img">
+                        <input type="file" name="img" id="img">
                     </label>
                 </div>
                 <div th:if="*{role == 'STUDENT'}" th:object="${student}">
