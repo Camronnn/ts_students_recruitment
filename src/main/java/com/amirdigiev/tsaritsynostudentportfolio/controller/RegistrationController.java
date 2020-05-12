@@ -91,7 +91,7 @@ public class RegistrationController {
         userService.addUserWithRole(user);
 
         securityService.autoLogin(newUser.getUsername(), newUser.getMatchingPassword());
-        log.info("New user registered: " + newUser.toString());
+        log.info("New user registered: " + newUser);
 
         return "redirect:/home";
     }

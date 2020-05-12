@@ -10,6 +10,10 @@
 </head>
 <body>
     <div th:fragment="header" id="header">
+        <div class="welcome">
+            <h1>Добро пожаловать,</h1>
+            <h1 style="float: left; margin-left: 285px; margin-top: -36px" th:text="${username}"></h1>
+        </div>
         <div class="login">
             <div class="avatar">
                 <img th:src="@{'/images/avatar/' + ${avatar}}" alt="avatar">

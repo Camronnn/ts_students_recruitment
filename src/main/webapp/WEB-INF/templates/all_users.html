@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>All users</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/all_users.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <div class="all_users">
+            <h1>Все пользователи</h1>
+            <div th:if="${user.role} != 'ADMIN'" th:each="user : ${users}" class="user">
+                <div class="avatar">
+                    <img th:src="@{'/images/avatar/' + ${user.avatar}}" alt="аватар">
+                </div>
+                <form th:if="${role} == 'ADMIN'" th:action="@{/delete_user/{id}(id=${user.id})}" method="post" class="delete">
+                    <button type="submit">Удалить</button>
+                </form>
+                <div class="fullname">
+                    <span th:text="${user.name}"></span>
+                    <span th:text="${user.surname}"></span>
+                </div>
+                <div th:if="${user.role} == 'STUDENT'" class="role">
+                    Роль:<span th:text="'Студент'"></span>
+                </div>
+                <div th:if="${user.role} == 'ADMIN'" class="role">
+                    Роль:<span th:text="'Админ'"></span>
+                </div>
+                <div th:if="${user.role} == 'DIRECTOR'" class="role">
+                    Роль:<span th:text="'Директор'"></span>
+                </div>
+                <div th:if="${user.role} == 'MANAGER'" class="role">
+                    Роль:<span th:text="'Менеджер'"></span>
+                </div>
+                <div class="mail">
+                    Email:<span th:text="${user.mail}"></span>
+                </div>
+                <div class="number">
+                    Ном. тел.:<span th:text="${user.number}"></span>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -85,12 +85,6 @@ public class HomeController {
             model.addAttribute("groupNumber", student.getGroupNumber());
             model.addAttribute("rating", student.getRating());
             model.addAttribute("certificates", student.getCertificates());
-
-//            try {
-//                generatorDocxFile.createPortfolio(student);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
         }
 
         if (userRole instanceof Admin) {
@@ -111,6 +105,7 @@ public class HomeController {
 
         fileService.setDefaultAvatar();
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("role", currentUser.getRole());
         model.addAttribute("name", currentUser.getName());
         model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("avatar", currentUser.getAvatar());
@@ -131,10 +126,12 @@ public class HomeController {
             Student student = (Student) userRole;
             model.addAttribute("student", student);
         }
+
         if (userRole instanceof Director) {
             Director director = (Director) userRole;
             model.addAttribute("director", director);
         }
+
         if (userRole instanceof HrManager) {
             HrManager hrManager = (HrManager) userRole;
             model.addAttribute("manager", hrManager);
@@ -183,6 +180,17 @@ public class HomeController {
     @GetMapping("/docx_form")
     public String getCreateDocxForm(Model model) {
         log.info(userService.getAnAuthorizedUser().getUsername() + " switched to /docx_form");
+        User currentUser = userService.getAnAuthorizedUser();
+        List<Student> students = studentService.findAll();
+        for (Student student : students) {
+            if (student.getUser().getId().equals(currentUser.getId())) {
+                try {
+                    generatorDocxFile.createPortfolio(student);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return "docx_form";
     }
 
@@ -202,7 +210,8 @@ public class HomeController {
 
     @PostMapping("/add_certificate")
     public String confirmAddingCertificate(@ModelAttribute("certificate") Certificate certificate,
-                                           @RequestParam MultipartFile certificateImg) throws IOException {
+                                           @RequestParam MultipartFile certificateImg) throws IOException
+    {
         log.info(userService.getAnAuthorizedUser().getUsername() + " switched to /add_certificate");
         certificate.setCertificateImage(fileService.uploadImg(certificateImg, Paths.get(certificateFolder)));
         log.info("new certificate uploaded: " + certificateImg.getOriginalFilename());
@@ -224,7 +233,8 @@ public class HomeController {
     }
 
     @PostMapping("/delete_certificate/{id}")
-    public String deleteCertificate(@PathVariable("id") Long id) {
+    public String deleteCertificate(@PathVariable("id") Long id)
+    {
         Optional<Certificate> existingCertificate = certificateService.findById(id);
         Student student = existingCertificate.get().getStudent();
         studentService.decreaseRating(student.getId());

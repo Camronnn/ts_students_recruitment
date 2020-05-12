@@ -42,6 +42,9 @@ public class FileService {
 
     public void setDefaultAvatar() {
         User currentUser = userService.getAnAuthorizedUser();
+        if (currentUser.getRole().equals("ADMIN")) {
+            userService.updateAvatarOfCurrentUser("admin.jpg");
+        }
         if (currentUser.getAvatar() == null || currentUser.getAvatar().equals("")) {
             userService.updateAvatarOfCurrentUser("default_avatar.png");
         }

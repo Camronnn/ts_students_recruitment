@@ -38,6 +38,8 @@ public class ConfirmController {
         User currentUser = userService.getAnAuthorizedUser();
         List<Certificate> certificates = certificateService.findAll();
 
+        model.addAttribute("avatar", currentUser.getAvatar());
+        model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("role", currentUser.getRole());
         model.addAttribute("certificates", certificates);
 

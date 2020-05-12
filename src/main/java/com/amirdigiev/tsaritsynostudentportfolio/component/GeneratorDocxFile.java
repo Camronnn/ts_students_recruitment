@@ -1,6 +1,8 @@
 package com.amirdigiev.tsaritsynostudentportfolio.component;
 
 import com.amirdigiev.tsaritsynostudentportfolio.model.role.Student;
+import org.apache.poi.util.Units;
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,15 @@ public class GeneratorDocxFile {
     @Value("${application.docx-folder}")
     private String docxFolder;
 
-    public void createPortfolio(Student student) throws Exception {
+    @Value("${application.avatar-folder}")
+    private String avatarFolder;
+
+    public void createPortfolio(Student student
+//                                String education,
+//                                String collegeSpecialty,
+//                                String trainingTime,
+//                                String additionalEducation
+                                ) throws Exception {
         String name = student.getUser().getName();
         String surname = student.getUser().getSurname();
         String patronymic = student.getUser().getPatronymic();
@@ -68,36 +78,30 @@ public class GeneratorDocxFile {
         run.setItalic(true);
         run.setFontFamily("Times New Roman");
 
-//        XWPFHeaderFooterPolicy headerFooterPolicy = document.getHeaderFooterPolicy();
-//        if (headerFooterPolicy == null)
-//            headerFooterPolicy = document.createHeaderFooterPolicy();
-//
-//        XWPFHeader header = headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT);
-//
-//        paragraph = header.createParagraph();
-//        paragraph.setAlignment(ParagraphAlignment.CENTER);
-//
-//        run = paragraph.createRun();
-//        run.setText("The Header:");
-//
-//        FileInputStream inputStream = new FileInputStream(docxFolder + File.separator + avatar);
-//
-//        if (avatar.endsWith(".png"))
-//            paragraph.createRun().addPicture(
-//                    inputStream,
-//                    XWPFDocument.PICTURE_TYPE_PNG,
-//                    avatar,
-//                    Units.toEMU(200),
-//                    Units.toEMU(200)
-//            );
-//        else
-//            paragraph.createRun().addPicture(
-//                    inputStream,
-//                    XWPFDocument.PICTURE_TYPE_JPEG,
-//                    avatar,
-//                    Units.toEMU(200),
-//                    Units.toEMU(200));
-//        inputStream.close();
+
+        paragraph = document.createParagraph();
+        paragraph.setAlignment(ParagraphAlignment.CENTER);
+
+        run = paragraph.createRun();
+
+        FileInputStream inputStream = new FileInputStream(avatarFolder + File.separator + avatar);
+
+        if (avatar.endsWith(".png"))
+            paragraph.createRun().addPicture(
+                    inputStream,
+                    XWPFDocument.PICTURE_TYPE_PNG,
+                    avatar,
+                    Units.toEMU(250),
+                    Units.toEMU(250)
+            );
+        else
+            paragraph.createRun().addPicture(
+                    inputStream,
+                    XWPFDocument.PICTURE_TYPE_JPEG,
+                    avatar,
+                    Units.toEMU(250),
+                    Units.toEMU(250));
+        inputStream.close();
 
 
         paragraph = document.createParagraph();
@@ -110,7 +114,6 @@ public class GeneratorDocxFile {
         run.setFontSize(14);
         run.setFontFamily("Times New Roman");
         run.setText("Фамилия, имя, отчество: " + surname + " " + name + " " + patronymic);
-//        run.setUnderline(UnderlinePatterns.SINGLE);
 
         paragraph = document.createParagraph();
 

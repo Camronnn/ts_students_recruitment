@@ -26,6 +26,16 @@ a:hover {
     margin: auto auto;
 }
 
+.welcome {
+    float: left;
+    margin-left: 50px;
+    margin-top: 10px;
+    width: 600px;
+    height: 30px;
+    text-align: left;
+    color: white;
+}
+
 .login {
     float: right;
     margin-top: 10px;

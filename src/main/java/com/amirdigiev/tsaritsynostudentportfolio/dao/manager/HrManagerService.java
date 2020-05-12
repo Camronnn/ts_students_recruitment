@@ -48,4 +48,8 @@ public class HrManagerService {
             }
         }
     }
+
+    public void deleteById(Long id) {
+        hrManagerRepository.deleteById(id);
+    }
 }

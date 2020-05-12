@@ -12,15 +12,23 @@
 <body>
     <nav th:fragment="nav_panel" class="nav_panel">
         <div id="logo">
-            <a href="#">
+            <a th:href="@{/home}">
                 <img src="/images/nav_panel/logo.png" alt="logo">
             </a>
         </div>
         <ul class="list_links">
-            <li><a th:href="@{/home}"><img src="/images/nav_panel/home.png" alt="home"></a></li>
-            <li><a th:href="@{/confirm_certificates}"><img src="/images/nav_panel/news.png" alt="event"></a></li>
-            <li><a th:href="@{/registration}"><img src="/images/nav_panel/add_user.png" alt="students"></a></li>
-            <!--<li><a href="#"><img src="/images/nav_panel/events.png" alt="events"></a></li>-->
+            <li>
+                <a th:href="@{/home}"><img src="/images/nav_panel/home.png" alt="home"></a>
+            </li>
+            <li>
+                <a th:href="@{/confirm_certificates}"><img src="/images/nav_panel/news.png" alt="event"></a>
+            </li>
+            <li>
+                <a th:href="@{/all_users}"><img src="/images/nav_panel/all_users.png" alt="users"></a>
+            </li>
+            <li>
+                <a th:href="@{/registration}"><img src="/images/nav_panel/add_user.png" alt="students"></a>
+            </li>
         </ul>
     </nav>
 </body>
