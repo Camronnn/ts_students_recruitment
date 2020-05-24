@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -44,6 +45,9 @@ public class AdminInitializer {
             newUser = new User();
             newUser.setUsername("Admin");
             newUser.setPassword("12345");
+            newUser.setBirthday(LocalDate.of(1995, 10, 5));
+            newUser.setName("Admin");
+            newUser.setSurname("Admin");
             newUser.setRole("ADMIN");
             userService.add(newUser);
         }

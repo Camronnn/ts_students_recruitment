@@ -1,13 +1,13 @@
 package com.amirdigiev.tsaritsynostudentportfolio.model.role;
 
 import com.amirdigiev.tsaritsynostudentportfolio.model.Certificate;
+import com.amirdigiev.tsaritsynostudentportfolio.model.Event;
 import com.amirdigiev.tsaritsynostudentportfolio.model.RoleEnum;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "student", schema = "public")
@@ -30,16 +30,25 @@ public class Student implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "event_student",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id")
+    )
+    private Set<Event> events = new HashSet<>();
+
     public Student(String faculty,
-                   Integer rating,
                    String groupNumber,
                    List<Certificate> certificates,
-                   User user) {
+                   User user,
+                   Set<Event> events) {
         this.faculty = faculty;
         this.rating = 0;
         this.groupNumber = groupNumber;
         this.certificates = certificates;
         this.user = user;
+        this.events = events;
         this.user.setRole(RoleEnum.ROLE_STUDENT.getTypeRole());
     }
 

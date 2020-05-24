@@ -42,7 +42,7 @@ li {
 .nav_panel {
     float: left;
     width: 100px;
-    height: 100%;
+    min-height: 100%;
     background-color: #302f2f;
 }
 
@@ -55,10 +55,6 @@ li {
     height: 65px;
     text-align: center;
     transition: 0.5s;
-}
-
-.nav_panel ul li:not(:last-child) {
-    margin-bottom: 25px;
 }
 
 .nav_panel ul li:hover {

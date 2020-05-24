@@ -18,30 +18,103 @@
     border-bottom: 1px solid gray;
 }
 
-.edit_form form .avatar {
+.username {
+    float: left;
+    margin-top: 30px;
+    margin-left: 70px;
 }
 
-.edit_form form {
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    text-align: right;
+.password {
+    float: left;
+    margin-top: 10px;
+    margin-left: 95px;
 }
 
-.edit_form form div {
-    margin-bottom: 10px;
-    margin-left: -10px;
+.matching {
+    float: left;
+    margin-top: 10px;
+    margin-left: 50px;
 }
 
-.edit_form form div input {
-    margin-left: 10px;
+.surname {
+    float: left;
+    margin-top: 10px;
+    margin-left: 83px;
 }
 
-.edit_form form .birthday input {
-    width: 160px;
+.name {
+    float: left;
+    margin-top: 10px;
+    margin-left: 117px;
 }
 
-.edit_form form button {
-    width: 165px;
+.patronymic {
+    float: left;
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.birthday {
+    float: left;
+    margin-top: 10px;
+    margin-left: 39px;
+}
+
+.birthday input {
+    width: 162px;
+}
+
+.number {
+    float: left;
+    margin-top: 10px;
+    margin-left: 70px;
+}
+
+.hometown {
+    float: left;
+    margin-top: 10px;
+    margin-left: 105px;
+}
+
+.mail {
+    float: left;
+    margin-top: 10px;
+    margin-left: 83px;
+}
+
+.avatar {
+    float: left;
+    margin-top: 10px;
+    margin-left: 117px;
+}
+
+.group {
+    float: left;
+    margin-top: 10px;
+    margin-left: 58px;
+}
+
+.faculty {
+    float: left;
+    margin-top: 10px;
+    margin-left: 75px;
+}
+
+.submit {
+    width: 180px;
     height: 30px;
+    margin-top: 20px;
 }
+
+.department {
+    float: left;
+    margin-top: 10px;
+    margin-left: 75px;
+}
+
+.company {
+    float: left;
+    margin-top: 10px;
+    margin-left: 75px;
+}
+

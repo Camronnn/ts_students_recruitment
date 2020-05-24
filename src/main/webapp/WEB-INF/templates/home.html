@@ -4,7 +4,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <link rel="stylesheet" type="text/css" href="../../static/css/home.css"/>
     <meta charset="UTF-8">
     <title th:text="${name} + ' ' + ${surname}"></title>
 
@@ -49,7 +48,7 @@
                 <div class="mail">
                     <img src="/images/home/mail.png" alt="mail">
                     <span style="font-weight: bold">Почта:</span>
-                    <span th:text="*{mail}"></span>
+                    <span th:text="*{email}"></span>
                 </div>
                 <div class="number">
                     <img src="/images/home/number.png" alt="number">
@@ -91,13 +90,16 @@
         <form th:if="*{role != 'ADMIN'}" method="post" th:action="@{/delete_avatar}" class="delete_avatar">
             <button type="submit" class="delete_button">Удалить фото</button>
         </form>
+        <a th:if="*{role == 'DIRECTOR'}" th:href="@{/send_mail}" class="redirect">
+            <button class="redirect_button">Разослать письмо</button>
+        </a>
         <div th:if="*{role == 'STUDENT'}" class="certificate_table">
             <div class="title">
                 <div>Достижения</div>
                 <a th:href="@{/add_certificate}"><img src="/images/home/plus.png" alt="добавить"></a>
             </div>
             <div th:if="${certificates == null}" class="empty_list">
-                <span class="">Сертификаты или грамоты отсутствуют</span>
+                <span>Сертификаты или грамоты отсутствуют</span>
             </div>
             <div th:each="certificate : ${certificates}" class="all_certificates">
                 <div th:if="${certificate.approved} == true" class="certificate">

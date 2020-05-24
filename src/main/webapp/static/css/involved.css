@@ -1,0 +1,151 @@
+.involved_list {
+    float: left;
+    width: 800px;
+    min-height: 500px;
+    margin-top: 20px;
+    margin-left: 180px;
+    background-color: gainsboro;
+    box-shadow:  0 0 2px 0;
+}
+
+.involved_list .header {
+    float: left;
+    width: 100%;
+    height: 50px;
+    background-color: cornflowerblue;
+    box-shadow: 0 0 2px 0;
+}
+
+.involved_list .header div {
+    float: left;
+    margin-left: 300px;
+    margin-top: 10px;
+    color: white;
+    font-size: 24px;
+}
+
+.involved_list .student {
+    float: left;
+    margin-top: 20px;
+    margin-left: 25px;
+    width: 750px;
+    height: 200px;
+    background-color: snow;
+    box-shadow: 0 0 2px 0;
+}
+
+.involved_list .student .student_avatar {
+    float: left;
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 200px;
+    height: 180px;
+    box-shadow:  0 0 2px 0;
+}
+
+.involved_list .student .student_avatar img {
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 180px;
+    height: 160px;
+}
+
+.involved_list .student .fullname {
+    float: left;
+    width: 350px;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.involved_list .student .accrue_rating {
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+
+}
+
+.involved_list .student .accrue_rating select {
+    float: right;
+    height: 50px;
+    margin-left: 5px;
+}
+
+.involved_list .student .accrue_rating button {
+    width: 160px;
+    height: 50px;
+}
+
+.involved_list .student .delete_student {
+    float: right;
+    margin-top: 80px;
+    margin-right: -205px;
+}
+
+.involved_list .student .delete_student button {
+    color: white;
+    width: 205px;
+    height: 50px;
+    border: 0;
+    background-color: #ba2b2b;
+}
+
+.involved_list .student .rating {
+    float: left;
+    width: 250px;
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.involved_list .student .rating span {
+    float: left;
+}
+
+.involved_list .student .rating span:nth-child(2) {
+    margin-top: 1px;
+    margin-left: 7px;
+    margin-right: 5px;
+}
+
+.involved_list .student .rating img {
+    float: left;
+    margin-top: -2px;
+    width: 25px;
+    height: 25px;
+}
+
+.involved_list .student .group {
+    float: left;
+    margin-top: 40px;
+    margin-left: -250px;
+    width: 200px;
+    font-size: 18px;
+}
+
+.involved_list .student .mail {
+    float: left;
+    width: 250px;
+    height: 20px;
+    margin-top: 40px;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.involved_list .student .phone {
+    float: left;
+    width: 250px;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.involved_list .student .birthday {
+    float: left;
+    width: 250px;
+    margin-top: 40px;
+    margin-left: -250px;
+    font-size: 18px;
+}

@@ -2,7 +2,6 @@ package com.amirdigiev.tsaritsynostudentportfolio.component;
 
 import com.amirdigiev.tsaritsynostudentportfolio.model.role.Student;
 import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,19 +20,21 @@ public class GeneratorDocxFile {
     @Value("${application.avatar-folder}")
     private String avatarFolder;
 
-    public void createPortfolio(Student student
-//                                String education,
-//                                String collegeSpecialty,
-//                                String trainingTime,
-//                                String additionalEducation
-                                ) throws Exception {
+    public void createPortfolio(Student student,
+                                String education,
+                                String collegeSpecialty,
+                                String startTraining,
+                                String endTraining,
+                                String additionalEducation
+                                ) throws Exception
+    {
         String name = student.getUser().getName();
         String surname = student.getUser().getSurname();
         String patronymic = student.getUser().getPatronymic();
         String avatar = student.getUser().getAvatar();
         LocalDate birthday = student.getUser().getBirthday();
         String number = student.getUser().getNumber();
-        String email = student.getUser().getMail();
+        String email = student.getUser().getEmail();
 
         XWPFDocument document = new XWPFDocument();
         XWPFParagraph paragraph;
@@ -78,7 +79,6 @@ public class GeneratorDocxFile {
         run.setItalic(true);
         run.setFontFamily("Times New Roman");
 
-
         paragraph = document.createParagraph();
         paragraph.setAlignment(ParagraphAlignment.CENTER);
 
@@ -86,7 +86,7 @@ public class GeneratorDocxFile {
 
         FileInputStream inputStream = new FileInputStream(avatarFolder + File.separator + avatar);
 
-        if (avatar.endsWith(".png"))
+        if (avatar.endsWith(".png")) {
             paragraph.createRun().addPicture(
                     inputStream,
                     XWPFDocument.PICTURE_TYPE_PNG,
@@ -94,15 +94,15 @@ public class GeneratorDocxFile {
                     Units.toEMU(250),
                     Units.toEMU(250)
             );
-        else
+        } else {
             paragraph.createRun().addPicture(
                     inputStream,
                     XWPFDocument.PICTURE_TYPE_JPEG,
                     avatar,
                     Units.toEMU(250),
                     Units.toEMU(250));
+        }
         inputStream.close();
-
 
         paragraph = document.createParagraph();
 
@@ -112,8 +112,15 @@ public class GeneratorDocxFile {
 
         run = paragraph.createRun();
         run.setFontSize(14);
+        run.setBold(true);
         run.setFontFamily("Times New Roman");
-        run.setText("Фамилия, имя, отчество: " + surname + " " + name + " " + patronymic);
+        run.setText("Фамилия, имя, отчество: ");
+
+        run = paragraph.createRun();
+        run.setFontSize(14);
+        run.setFontFamily("Times New Roman");
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setText(surname + " " + name + " " + patronymic);
 
         paragraph = document.createParagraph();
 
@@ -124,8 +131,14 @@ public class GeneratorDocxFile {
         run = paragraph.createRun();
         run.setFontSize(14);
         run.setFontFamily("Times New Roman");
-        run.setText("Дата рождения: "
-                + birthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString() + " г.");
+        run.setBold(true);
+        run.setText("Дата рождения: ");
+
+        run = paragraph.createRun();
+        run.setFontSize(14);
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setFontFamily("Times New Roman");
+        run.setText(birthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString() + " г.");
 
         paragraph = document.createParagraph();
 
@@ -135,8 +148,15 @@ public class GeneratorDocxFile {
 
         run = paragraph.createRun();
         run.setFontSize(14);
+        run.setBold(true);
         run.setFontFamily("Times New Roman");
-        run.setText("Образование (какую школу окончил, год окончания):");
+        run.setText("Образование (какую школу окончил, год окончания): ");
+
+        run = paragraph.createRun();
+        run.setFontSize(14);
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setFontFamily("Times New Roman");
+        run.setText(education);
 
         paragraph = document.createParagraph();
 
@@ -146,8 +166,15 @@ public class GeneratorDocxFile {
 
         run = paragraph.createRun();
         run.setFontSize(14);
+        run.setBold(true);
         run.setFontFamily("Times New Roman");
-        run.setText("Специальность, получаемая в колледже:");
+        run.setText("Специальность, получаемая в колледже: ");
+
+        run = paragraph.createRun();
+        run.setFontSize(14);
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setFontFamily("Times New Roman");
+        run.setText(collegeSpecialty);
 
         paragraph = document.createParagraph();
 
@@ -157,8 +184,18 @@ public class GeneratorDocxFile {
 
         run = paragraph.createRun();
         run.setFontSize(14);
+        run.setBold(true);
         run.setFontFamily("Times New Roman");
-        run.setText("Сроки обучения по специальности:");
+        run.setText("Сроки обучения по специальности: ");
+
+        run = paragraph.createRun();
+        run.setFontSize(14);
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setFontFamily("Times New Roman");
+        run.setText(
+                startTraining.replaceAll("-", ".")
+                + " - "
+                + endTraining.replaceAll("-", "."));
 
         paragraph = document.createParagraph();
 
@@ -168,8 +205,15 @@ public class GeneratorDocxFile {
 
         run = paragraph.createRun();
         run.setFontSize(14);
+        run.setBold(true);
         run.setFontFamily("Times New Roman");
-        run.setText("Контактный телефон: " + number);
+        run.setText("Контактный телефон: ");
+
+        run = paragraph.createRun();
+        run.setFontSize(14);
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setFontFamily("Times New Roman");
+        run.setText(number);
 
         paragraph = document.createParagraph();
 
@@ -179,8 +223,15 @@ public class GeneratorDocxFile {
 
         run = paragraph.createRun();
         run.setFontSize(14);
+        run.setBold(true);
         run.setFontFamily("Times New Roman");
-        run.setText("Email: " + email);
+        run.setText("Email: ");
+
+        run = paragraph.createRun();
+        run.setFontSize(14);
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setFontFamily("Times New Roman");
+        run.setText(email);
 
         paragraph = document.createParagraph();
 
@@ -190,12 +241,20 @@ public class GeneratorDocxFile {
 
         run = paragraph.createRun();
         run.setFontSize(14);
+        run.setBold(true);
         run.setFontFamily("Times New Roman");
         run.setText(
                 "Сведения о дополнительном образовании " +
                         "(музыкальная, художественная, спортивная, " +
-                        "школа иностранных языков  или иная школа):"
+                        "школа иностранных языков  или иная школа): "
         );
+
+        run = paragraph.createRun();
+        run.setFontSize(14);
+        run.setUnderline(UnderlinePatterns.SINGLE);
+        run.setFontFamily("Times New Roman");
+        run.setText(additionalEducation);
+
 
         document.write(outputStream);
         outputStream.close();

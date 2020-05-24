@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add event</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/add_event.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
+    <div class="form">
+        <div class="header">
+            <div>Добавить мероприятие</div>
+        </div>
+        <form th:action="@{/add_event}" th:object="${event}" method="post" enctype="multipart/form-data">
+            <div class="name margin">
+                <label for="name">
+                    Назв. мероприятия: <input th:field="*{name}" type="text" id="name">
+                </label>
+            </div>
+            <div class="description margin">
+                <label for="description">
+                    <textarea th:field="*{description}" placeholder="Вставьте описание..." id="description" rows="5"></textarea>
+                </label>
+            </div>
+            <div class="type margin">
+                <label for="type">
+                    Тип мероприятия: <input th:field="*{type}" type="text" id="type">
+                </label>
+            </div>
+            <div class="img margin">
+                <label for="img">
+                    <input type="file" name="img" id="img">
+                </label>
+            </div>
+            <div class="start margin">
+                <label for="start">
+                    Начало: <input th:field="*{start}" type="date" id="start">
+                </label>
+            </div>
+            <div class="end margin">
+                <label for="end">
+                    Конец: <input th:field="*{theEnd}" type="date" id="end">
+                </label>
+            </div>
+            <button type="submit" class="button">Добавить</button>
+        </form>
+    </div>
+</body>
+</html>

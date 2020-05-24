@@ -16,35 +16,78 @@
     <header th:replace="fragments/header :: header"></header>
     <main>
         <div class="all_users">
-            <h1>Все пользователи</h1>
-            <div th:if="${user.role} != 'ADMIN'" th:each="user : ${users}" class="user">
+            <h1>Директора</h1>
+            <div style="border-bottom: 1px solid black"></div>
+            <div th:each="director : ${directors}" class="user" style="margin-top: 20px">
                 <div class="avatar">
-                    <img th:src="@{'/images/avatar/' + ${user.avatar}}" alt="аватар">
+                    <a th:href="@{/id(id=${director.id})}">
+                        <img th:src="@{'/images/avatar/' + ${director.avatar}}" alt="аватар">
+                    </a>
                 </div>
-                <form th:if="${role} == 'ADMIN'" th:action="@{/delete_user/{id}(id=${user.id})}" method="post" class="delete">
+                <form th:if="${role} == 'ADMIN'" th:action="@{/delete_user/{id}(id=${director.id})}" method="post" class="delete">
                     <button type="submit">Удалить</button>
                 </form>
                 <div class="fullname">
-                    <span th:text="${user.name}"></span>
-                    <span th:text="${user.surname}"></span>
-                </div>
-                <div th:if="${user.role} == 'STUDENT'" class="role">
-                    Роль:<span th:text="'Студент'"></span>
-                </div>
-                <div th:if="${user.role} == 'ADMIN'" class="role">
-                    Роль:<span th:text="'Админ'"></span>
-                </div>
-                <div th:if="${user.role} == 'DIRECTOR'" class="role">
-                    Роль:<span th:text="'Директор'"></span>
-                </div>
-                <div th:if="${user.role} == 'MANAGER'" class="role">
-                    Роль:<span th:text="'Менеджер'"></span>
+                    <span th:text="${director.name}"></span>
+                    <span th:text="${director.patronymic}"></span>
                 </div>
                 <div class="mail">
-                    Email:<span th:text="${user.mail}"></span>
+                    Email:<span th:text="${director.email}"></span>
                 </div>
                 <div class="number">
-                    Ном. тел.:<span th:text="${user.number}"></span>
+                    Ном. тел.:<span th:text="${director.number}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="all_users">
+            <h1>Студенты</h1>
+            <div th:each="student : ${students}" class="user">
+                <div class="avatar">
+                    <a th:href="@{/id(id=${student.id})}">
+                        <img th:src="@{'/images/avatar/' + ${student.avatar}}" alt="аватар">
+                    </a>
+                </div>
+                <form th:if="${role} == 'ADMIN'" th:action="@{/delete_user/{id}(id=${student.id})}" method="post" class="delete">
+                    <button type="submit">Удалить</button>
+                </form>
+                <div class="star">
+                    <img src="/images/home/star.png" alt="star">
+                </div>
+                <div th:each="s : ${studentsList}" th:if="${s.user.id} == ${student.id}" class="rating">
+                    <span th:text="${s.rating}"></span>
+                </div>
+                <div class="fullname">
+                    <span th:text="${student.name}"></span>
+                    <span th:text="${student.surname}"></span>
+                </div>
+                <div class="student_mail">
+                    Email:<span th:text="${student.email}"></span>
+                </div>
+                <div class="number_student">
+                    Ном. тел.:<span th:text="${student.number}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="all_users">
+            <h1>Менеджеры</h1>
+            <div th:each="manager : ${managers}" class="user">
+                <div class="avatar">
+                    <a th:href="@{/id(id=${manager.id})}">
+                        <img th:src="@{'/images/avatar/' + ${manager.avatar}}" alt="аватар">
+                    </a>
+                </div>
+                <form th:if="${role} == 'ADMIN'" th:action="@{/delete_user/{id}(id=${manager.id})}" method="post" class="delete">
+                    <button type="submit">Удалить</button>
+                </form>
+                <div class="fullname">
+                    <span th:text="${manager.name}"></span>
+                    <span th:text="${manager.surname}"></span>
+                </div>
+                <div class="mail">
+                    Email:<span th:text="${manager.email}"></span>
+                </div>
+                <div class="number">
+                    Ном. тел.:<span th:text="${manager.number}"></span>
                 </div>
             </div>
         </div>

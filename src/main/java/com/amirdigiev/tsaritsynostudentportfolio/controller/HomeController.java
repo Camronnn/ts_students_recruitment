@@ -1,11 +1,11 @@
 package com.amirdigiev.tsaritsynostudentportfolio.controller;
 
+import com.amirdigiev.tsaritsynostudentportfolio.component.EmailSender;
 import com.amirdigiev.tsaritsynostudentportfolio.component.GeneratorDocxFile;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.admin.AdminService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.certificate.CertificateService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.director.DirectorService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.manager.HrManagerService;
-import com.amirdigiev.tsaritsynostudentportfolio.dao.moderator.ModeratorService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.student.StudentService;
 import com.amirdigiev.tsaritsynostudentportfolio.model.*;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.file.FileService;
@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,11 +36,13 @@ public class HomeController {
     private final DirectorService directorService;
     private final AdminService adminService;
     private final HrManagerService hrManagerService;
-    private final ModeratorService moderatorService;
+
     private final FileService fileService;
     private final CertificateService certificateService;
+
     private final BCryptPasswordEncoder passwordEncoder;
     private final GeneratorDocxFile generatorDocxFile;
+    private final EmailSender emailSender;
 
     @Value("${application.avatar-folder}")
     private String avatarFolder;
@@ -57,7 +60,7 @@ public class HomeController {
                           DirectorService directorService,
                           AdminService adminService,
                           HrManagerService hrManagerService,
-                          ModeratorService moderatorService)
+                          EmailSender emailSender)
     {
         this.userService = userService;
         this.fileService = fileService;
@@ -68,7 +71,7 @@ public class HomeController {
         this.directorService = directorService;
         this.adminService = adminService;
         this.hrManagerService = hrManagerService;
-        this.moderatorService = moderatorService;
+        this.emailSender = emailSender;
     }
 
     @GetMapping("/home")
@@ -177,21 +180,57 @@ public class HomeController {
         return "redirect:/home";
     }
 
-    @GetMapping("/docx_form")
+    @GetMapping("docx_form")
     public String getCreateDocxForm(Model model) {
         log.info(userService.getAnAuthorizedUser().getUsername() + " switched to /docx_form");
         User currentUser = userService.getAnAuthorizedUser();
+
+        model.addAttribute("username", currentUser.getUsername());
+        model.addAttribute("avatar", currentUser.getAvatar());
+        return "docx_form";
+    }
+
+    @PostMapping("/docx_form")
+    public String submitCreateDocxForm(@RequestParam String education,
+                                       @RequestParam String specialty,
+                                       @RequestParam String start,
+                                       @RequestParam String end,
+                                       @RequestParam String additionalEducation) {
+        User currentUser = userService.getAnAuthorizedUser();
+
         List<Student> students = studentService.findAll();
         for (Student student : students) {
             if (student.getUser().getId().equals(currentUser.getId())) {
                 try {
-                    generatorDocxFile.createPortfolio(student);
+                    generatorDocxFile.createPortfolio(
+                            student,
+                            education,
+                            specialty,
+                            start,
+                            end,
+                            additionalEducation);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-        return "docx_form";
+
+        return "redirect:/home";
+    }
+
+    @GetMapping("/send_mail")
+    public String getSendMailForm(Model model) {
+        model.addAttribute("username", userService.getAnAuthorizedUser().getUsername());
+        model.addAttribute("avatar", userService.getAnAuthorizedUser().getAvatar());
+
+        return "send_mail";
+    }
+
+    @PostMapping("/send_mail")
+    public String submitSendMailForm(@RequestParam String subject,
+                                     @RequestParam String text) {
+        emailSender.sendSimpleMessage(subject, text);
+        return "redirect:/home";
     }
 
     @PostMapping("/delete_avatar")
@@ -227,7 +266,8 @@ public class HomeController {
             }
         }
         certificateService.add(certificate);
-        log.info(userService.getAnAuthorizedUser().getUsername() + " added new certificate: " + certificate.getCompetency());
+        log.info(userService.getAnAuthorizedUser().getUsername()
+                + " added new certificate: " + certificate.getCompetency());
 
         return "redirect:/home";
     }

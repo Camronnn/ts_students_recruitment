@@ -10,7 +10,6 @@ public enum RoleEnum {
     ROLE_STUDENT("STUDENT"),
     ROLE_DIRECTOR("DIRECTOR"),
     ROLE_HRMANAGER("MANAGER"),
-    ROLE_MODERATOR("MODERATOR"),
     ROLE_ADMIN("ADMIN");
 
     private String typeRole;

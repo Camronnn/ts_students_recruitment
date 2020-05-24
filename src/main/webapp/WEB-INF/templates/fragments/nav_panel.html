@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title></title>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/fragments/nav_panel.css}">
 </head>
 <body>
     <nav th:fragment="nav_panel" class="nav_panel">
@@ -21,12 +21,15 @@
                 <a th:href="@{/home}"><img src="/images/nav_panel/home.png" alt="home"></a>
             </li>
             <li>
+                <a th:href="@{/events}"><img style="width: 45px; height: 45px" src="/images/nav_panel/add_news.png" alt="home"></a>
+            </li>
+            <li th:if="${role} == 'ADMIN'">
                 <a th:href="@{/confirm_certificates}"><img src="/images/nav_panel/news.png" alt="event"></a>
             </li>
             <li>
                 <a th:href="@{/all_users}"><img src="/images/nav_panel/all_users.png" alt="users"></a>
             </li>
-            <li>
+            <li th:if="${role} == 'ADMIN'">
                 <a th:href="@{/registration}"><img src="/images/nav_panel/add_user.png" alt="students"></a>
             </li>
         </ul>

@@ -48,7 +48,7 @@ public class SuperUserDto implements Serializable {
                 ", birthday=" + birthday +
                 ", hometown='" + hometown + '\'' +
                 ", number='" + number + '\'' +
-                ", mail='" + mail + '\'' +
+                ", email='" + mail + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", role='" + role + '\'' +
                 ", department='" + department + '\'' +

@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Word-портфолио</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/docx_form.css}">
 </head>
 <body>
-
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <h1 class="head">Заполнение портфолио</h1>
+        <div class="block">
+            <form method="post" th:action="@{/docx_form}">
+                <div class="education">
+                    <label>
+                        <strong>Образование:</strong> <input type="text" name="education">
+                    </label>
+                </div>
+                <div class="specialty">
+                    <label>
+                        <strong>Специальность:</strong> <input type="text" name="specialty">
+                    </label>
+                </div>
+                <div class="training_time">
+                    <strong>Сроки обучения:</strong>
+                    <div class="start">
+                        <strong>Начало:</strong> <input type="date" name="start">
+                    </div>
+                    <div class="end">
+                        <strong>Конец:</strong> <input type="date" name="end">
+                    </div>
+                </div>
+                <div class="additional_education">
+                    <strong>Доп.образование:</strong> <input type="text" name="additionalEducation">
+                </div>
+                <button class="submit" type="submit">Создать</button>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

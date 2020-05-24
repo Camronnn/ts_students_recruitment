@@ -6,6 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -23,21 +26,50 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Username cannot be null")
+    @Size(min = 4, max = 16, message = "Username must be between 4 and 16 characters")
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @NotNull(message = "Password cannot be null")
+//    @Size(min = 6, max = 32, message = "Password must be between 6 and 32 characters")
+    @Column(nullable = false)
     private String password;
 
     @Transient
     private String matchingPassword;
+
+    @NotNull(message = "Name cannot be null")
+    @Size(min = 3, max = 32, message = "Name must be between 3 and 32 characters")
+    @Column(nullable = false)
     private String name;
+
+    @NotNull(message = "Surname cannot be null")
+    @Size(min = 3, max = 32, message = "Surname must be between 3 and 32 characters")
+    @Column(nullable = false)
     private String surname;
+
+    @Size(min = 3, max = 32, message = "Patronymic must be between 3 and 32 characters")
     private String patronymic;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Date of birth cannot be null")
+    @Column(nullable = false)
     private LocalDate birthday;
+
+    @Size(min = 3, max = 32, message = "Hometown must be between 3 and 32 characters")
     private String hometown;
+
+    @Size(min = 11, max = 16, message = "Number must be between 11 and 16 characters")
     private String number;
-    private String mail;
+
+    @Email(message = "Email should be valid")
+    @Column(unique = true)
+    private String email;
     private String avatar;
+
+    @NotNull(message = "Role cannot be null")
+    @Column(nullable = false)
     private String role;
 
     @Override
@@ -55,7 +87,7 @@ public class User implements Serializable {
                 Objects.equals(birthday, user.birthday) &&
                 Objects.equals(hometown, user.hometown) &&
                 Objects.equals(number, user.number) &&
-                Objects.equals(mail, user.mail) &&
+                Objects.equals(email, user.email) &&
                 Objects.equals(avatar, user.avatar) &&
                 Objects.equals(role, user.role);
     }
@@ -68,7 +100,7 @@ public class User implements Serializable {
                 name, surname,
                 patronymic, birthday,
                 hometown, number,
-                mail, avatar,
+                email, avatar,
                 role);
     }
 
@@ -85,7 +117,7 @@ public class User implements Serializable {
                 ", birthday=" + birthday +
                 ", hometown='" + hometown + '\'' +
                 ", number='" + number + '\'' +
-                ", mail='" + mail + '\'' +
+                ", email='" + email + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", role='" + role + '\'' +
                 '}';

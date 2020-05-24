@@ -1,9 +1,9 @@
 package com.amirdigiev.tsaritsynostudentportfolio.dao.user;
 
 import com.amirdigiev.tsaritsynostudentportfolio.dao.admin.AdminService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.certificate.CertificateService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.director.DirectorService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.manager.HrManagerService;
-import com.amirdigiev.tsaritsynostudentportfolio.dao.moderator.ModeratorService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.file.*;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.student.StudentService;
 import com.amirdigiev.tsaritsynostudentportfolio.model.role.*;
@@ -31,13 +31,13 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final FileService fileService;
+    private final CertificateService certificateService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Value("${application.avatar-folder}")
     private String avatarFolder;
     private final StudentService studentService;
     private final AdminService adminService;
-    private final ModeratorService moderatorService;
     private final HrManagerService hrManagerService;
     private final DirectorService directorService;
 
@@ -47,17 +47,18 @@ public class UserService implements UserDetailsService {
                        BCryptPasswordEncoder passwordEncoder,
                        StudentService studentService,
                        AdminService adminService,
-                       ModeratorService moderatorService,
                        HrManagerService hrManagerService,
-                       DirectorService directorService) {
+                       DirectorService directorService,
+                       CertificateService certificateService)
+    {
         this.userRepository = userRepository;
         this.fileService = fileService;
         this.passwordEncoder = passwordEncoder;
         this.studentService = studentService;
         this.adminService = adminService;
-        this.moderatorService = moderatorService;
         this.hrManagerService = hrManagerService;
         this.directorService = directorService;
+        this.certificateService = certificateService;
     }
 
     @Override
@@ -105,7 +106,7 @@ public class UserService implements UserDetailsService {
         currentUser.setName(user.getName());
         currentUser.setPatronymic(user.getPatronymic());
         currentUser.setBirthday(user.getBirthday());
-        currentUser.setMail(user.getMail());
+        currentUser.setEmail(user.getEmail());
         currentUser.setNumber(user.getNumber());
         currentUser.setHometown(user.getHometown());
         currentUser.setAvatar(user.getAvatar());
@@ -151,12 +152,6 @@ public class UserService implements UserDetailsService {
                 directorService.add(newDirector);
                 break;
 
-            case "MODERATOR":
-                Moderator newModerator = new Moderator();
-                newModerator.setUser(user);
-                moderatorService.add(newModerator);
-                break;
-
             case "ADMIN":
                 Admin admin = new Admin();
                 admin.setUser(user);
@@ -176,32 +171,64 @@ public class UserService implements UserDetailsService {
                         return student;
                 }
                 break;
-            case "MODERATOR":
-                List<Moderator> moderators = moderatorService.findAll();
-                for(Moderator moderator : moderators) {
-                    if(currentUser.getId() == moderator.getUser().getId())
-                        return moderator;
-                }
+
             case "MANAGER":
                 List<HrManager> managers = hrManagerService.findAll();
                 for(HrManager manager : managers) {
                     if(currentUser.getId() == manager.getUser().getId())
                         return manager;
                 }
+                break;
+
             case "DIRECTOR":
                 List<Director> directors = directorService.findAll();
                 for(Director director : directors) {
                     if(currentUser.getId() == director.getUser().getId())
                         return director;
                 }
+                break;
+
             case "ADMIN":
                 List<Admin> admins = adminService.findAll();
                 for(Admin admin : admins) {
                     if(currentUser.getId() == admin.getUser().getId())
                         return admin;
                 }
+                break;
         }
 
         return null;
+    }
+
+    public void removeUserRole(Long id) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isPresent()) {
+            switch (user.get().getRole()) {
+                case "STUDENT":
+                    List<Student> students = studentService.findAll();
+                    for(Student student : students) {
+                        if (student.getUser().getId().equals(user.get().getId())) {
+                            certificateService.deleteAll(student);
+                            studentService.deleteById(student.getId());
+
+                        }
+                    }
+
+                case "DIRECTOR":
+                    List<Director> directors = directorService.findAll();
+                    for(Director director : directors) {
+                        if (director.getUser().getId().equals(user.get().getId()))
+                            directorService.deleteById(director.getId());
+                    }
+
+                case "MANAGER":
+                    List<HrManager> managers = hrManagerService.findAll();
+                    for(HrManager manager : managers) {
+                        if (manager.getUser().getId().equals(user.get().getId()))
+                            hrManagerService.deleteById(manager.getId());
+                    }
+            }
+        }
     }
 }

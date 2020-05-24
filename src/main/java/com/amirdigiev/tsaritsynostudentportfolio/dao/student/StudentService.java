@@ -43,7 +43,7 @@ public class StudentService {
         User currentUser = userService.getAnAuthorizedUser();
 
         List<Student> students = findAll();
-        for(Student student : students) {
+        for (Student student : students) {
             if (student.getUser().getId().equals(currentUser.getId())) {
                 student.setFaculty(updateStudent.getFaculty());
                 student.setGroupNumber(updateStudent.getGroupNumber());
@@ -55,6 +55,15 @@ public class StudentService {
 
     public void deleteById(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    public void accrueRatingById(Long id, Integer rating) {
+        Optional<Student> studentById = studentRepository.findById(id);
+        studentById.ifPresent(student ->
+                studentById.get().setRating(studentById.get().getRating() + rating)
+        );
+
+        studentRepository.save(studentById.get());
     }
 
     public void decreaseRating(Long id) {

@@ -34,8 +34,8 @@ public class DirectorService {
         return directorRepository.findById(id);
     }
 
-    public Director add(Director director) {
-        return directorRepository.save(director);
+    public void add(Director director) {
+        directorRepository.save(director);
     }
 
     public void update(Director newDirector) {

@@ -3,8 +3,8 @@ package com.amirdigiev.tsaritsynostudentportfolio.controller;
 import com.amirdigiev.tsaritsynostudentportfolio.component.Converter;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.admin.AdminService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.director.DirectorService;
+import com.amirdigiev.tsaritsynostudentportfolio.dao.file.FileService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.manager.HrManagerService;
-import com.amirdigiev.tsaritsynostudentportfolio.dao.moderator.ModeratorService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.student.StudentService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.user.UserService;
 import com.amirdigiev.tsaritsynostudentportfolio.model.dto.SuperUserDto;
@@ -29,10 +29,10 @@ public class RegistrationController {
     private final StudentService studentService;
     private final DirectorService directorService;
     private final AdminService adminService;
-    private final ModeratorService moderatorService;
     private final HrManagerService hrManagerService;
     private final SecurityService securityService;
     private final UserService userService;
+    private final FileService fileService;
 
     private final Converter converter;
 
@@ -43,8 +43,8 @@ public class RegistrationController {
                                   UserService userService,
                                   Converter converter,
                                   AdminService adminService,
-                                  ModeratorService moderatorService,
-                                  HrManagerService hrManagerService)
+                                  HrManagerService hrManagerService,
+                                  FileService fileService)
     {
         this.securityService = securityService;
         this.studentService = studentService;
@@ -52,25 +52,31 @@ public class RegistrationController {
         this.userService = userService;
         this.converter = converter;
         this.adminService = adminService;
-        this.moderatorService = moderatorService;
         this.hrManagerService = hrManagerService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String getLoginPage(Model model) {
         return "login";
     }
 
     @GetMapping("/registration")
     public String getUserRegistrationPage(Model model) {
         SuperUserDto userDto = new SuperUserDto();
+        User currentUser = userService.getAnAuthorizedUser();
+
+        model.addAttribute("role", currentUser.getRole());
         model.addAttribute("newUser", userDto);
+        model.addAttribute("avatar", currentUser.getAvatar());
+        model.addAttribute("username", currentUser.getUsername());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registerAccount(@ModelAttribute("newUser") @Valid SuperUserDto newUser,
+    public String registerAccount(@ModelAttribute("newUser")
+                                      @Valid SuperUserDto newUser,
                                           BindingResult bindingResult,
                                           Model model)
     {
@@ -78,7 +84,7 @@ public class RegistrationController {
         if(bindingResult.hasErrors()) {
             log.error("Validation errors: " + bindingResult.hasErrors());
             return "registration";
-            }
+        }
 
         if(!newUser.getPassword().equals(newUser.getMatchingPassword())) {
             log.error("Пароли не совпадают: " + newUser.getPassword() + " != " + newUser.getMatchingPassword());
@@ -87,10 +93,10 @@ public class RegistrationController {
         }
 
         User user = converter.toEntity(newUser);
+        user.setAvatar("default_avatar.png");
         userService.add(user);
         userService.addUserWithRole(user);
 
-        securityService.autoLogin(newUser.getUsername(), newUser.getMatchingPassword());
         log.info("New user registered: " + newUser);
 
         return "redirect:/home";

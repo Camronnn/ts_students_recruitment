@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/events.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <div class="events_table">
+            <div class="header">
+                <div>Мероприятия</div>
+                <a th:if="${role == 'DIRECTOR'}" th:href="@{/add_event}"><img src="/images/home/plus.png" alt="добавить"></a>
+            </div>
+            <div th:each="event : ${events}" class="event_list">
+                <div class="event">
+                    <div class="name">
+                        <h2 th:text="${event.name}"></h2>
+                    </div>
+                    <div class="dates">
+                        <span th:text="${#temporals.format(event.start, 'dd.MM.yyyy')}"></span>
+                        <span>-</span>
+                        <span th:text="${#temporals.format(event.theEnd, 'dd.MM.yyyy')}"></span>
+                    </div>
+                    <div class="type">
+                        <span th:text="${event.type}"></span>
+                    </div>
+                    <div class="description">
+                        <span th:text="${event.description}"></span>
+                    </div>
+                    <div class="image">
+                        <img th:src="@{'/images/event/' + ${event.image}}" alt="картинка">
+                    </div>
+                    <div class="count_students">
+                        Количество участвующих студентов: <span th:text="${#lists.size(event.students)}"></span>
+                    </div>
+                    <form th:if="${role == 'STUDENT'}" th:action="@{/participate/{id}(id=${event.id})}" method="post" class="participate">
+                        <button type="submit" class="participate_button">Участвовать</button>
+                    </form>
+                    <form th:if="${role == 'ADMIN' || role == 'DIRECTOR'}" th:action="@{/involved/{id}(id=${event.id})}" method="get" class="involved">
+                        <button>Участвующие</button>
+                    </form>
+                    <form th:if="${role == 'ADMIN' || role == 'DIRECTOR'}" th:action="@{/delete_event/{id}(id=${event.id})}" method="post" class="delete">
+                        <button type="submit" class="delete_button">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

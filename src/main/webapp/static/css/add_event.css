@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    background-color: cornflowerblue;
+    color: white;
+    text-align: center;
+}
+
+.header div {
+    float: left;
+    margin-top: 10px;
+    margin-left: 90px;
+    font-size: 24px;
+}
+
+.form {
+    float: left;
+    margin-top: 20px;
+    margin-left: 380px;
+    width: 400px;
+    height: 500px;
+    background-color: snow;
+    box-shadow: 0 0 3px 0;
+}
+
+.form form {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.margin {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.form .name {
+    float: left;
+    width: 350px;
+    height: 30px;
+}
+
+.form .description {
+    float: left;
+    width: 350px;
+    height: 40px;
+}
+
+.form .description textarea {
+    resize: none;
+    margin-top: 10px;
+    width: 320px;
+}
+
+.form .type {
+    float: left;
+    margin-top: 70px;
+    margin-left: 30px;
+}
+
+.form .img {
+    float: left;
+    margin-top: 20px;
+    margin-left: 105px;
+}
+
+.form .start {
+    float: left;
+    margin-top: 20px;
+    margin-left: 100px;
+}
+
+.form .start input {
+    width: 160px;
+}
+
+.form .end {
+    float: left;
+    margin-top: 20px;
+    margin-left: 107px;
+}
+
+.form .end input {
+    width: 160px;
+}
+
+.form .button {
+    float: left;
+    margin-top: 20px;
+    margin-left: 80px;
+    width: 200px;
+    height: 30px;
+}

@@ -1,6 +1,7 @@
 package com.amirdigiev.tsaritsynostudentportfolio.dao.certificate;
 
 import com.amirdigiev.tsaritsynostudentportfolio.model.Certificate;
+import com.amirdigiev.tsaritsynostudentportfolio.model.role.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,9 @@ public class CertificateService {
         } else {
             throw new NullPointerException("Сертификата с id: " + id + " не существует");
         }
+    }
+
+    public void deleteAll(Student student) {
+        certificateRepository.deleteAll(student.getCertificates());
     }
 }

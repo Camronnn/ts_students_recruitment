@@ -1,13 +1,12 @@
 package com.amirdigiev.tsaritsynostudentportfolio.controller;
 
+import com.amirdigiev.tsaritsynostudentportfolio.dao.certificate.CertificateService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.director.DirectorService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.manager.HrManagerService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.student.StudentService;
 import com.amirdigiev.tsaritsynostudentportfolio.dao.user.UserService;
-import com.amirdigiev.tsaritsynostudentportfolio.model.role.Director;
-import com.amirdigiev.tsaritsynostudentportfolio.model.role.HrManager;
-import com.amirdigiev.tsaritsynostudentportfolio.model.role.Student;
-import com.amirdigiev.tsaritsynostudentportfolio.model.role.User;
+import com.amirdigiev.tsaritsynostudentportfolio.model.role.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 public class DisplayAllUsersController {
 
@@ -25,17 +25,20 @@ public class DisplayAllUsersController {
     private final StudentService studentService;
     private final DirectorService directorService;
     private final HrManagerService hrManagerService;
+    private final CertificateService certificateService;
 
     @Autowired
     public DisplayAllUsersController(UserService userService,
                                      StudentService studentService,
                                      DirectorService directorService,
-                                     HrManagerService hrManagerService)
+                                     HrManagerService hrManagerService,
+                                     CertificateService certificateService)
     {
         this.userService = userService;
         this.studentService = studentService;
         this.directorService = directorService;
         this.hrManagerService = hrManagerService;
+        this.certificateService = certificateService;
     }
 
     @GetMapping("/all_users")
@@ -43,7 +46,34 @@ public class DisplayAllUsersController {
         List<User> users = userService.findAll();
         User currentUser = userService.getAnAuthorizedUser();
 
-        model.addAttribute("users", users);
+        List<Student> studentList = studentService.findAll();
+        studentList.sort(new Comparator<Student>() {
+            @Override
+            public int compare(Student student1, Student student2) {
+                return student1.getRating() > student2.getRating() ? -1
+                        : (student1.getRating() < student2.getRating()) ? 1 : 0;
+            }
+        });
+
+        List<User> students = new ArrayList<>();
+        for (Student student : studentList) {
+            students.add(student.getUser());
+        }
+
+        List<User> directors = users.stream()
+                .filter(user -> user.getRole().equals("DIRECTOR"))
+                .collect(Collectors.toList());
+
+        List<User> managers = users.stream()
+                .filter(user -> user.getRole().equals("MANAGER"))
+                .collect(Collectors.toList());
+
+        List<Student> studentsList = studentService.findAll();
+
+        model.addAttribute("students", students);
+        model.addAttribute("directors", directors);
+        model.addAttribute("managers", managers);
+        model.addAttribute("studentsList", studentsList);
         model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("avatar", currentUser.getAvatar());
         model.addAttribute("role", currentUser.getRole());
@@ -53,32 +83,12 @@ public class DisplayAllUsersController {
 
     @PostMapping("/delete_user/{id}")
     public String deleteUser(@PathVariable Long id) {
+        User currentUser = userService.getAnAuthorizedUser();
         Optional<User> user = userService.findById(id);
-
-        if (user.isPresent()) {
-            switch (user.get().getRole()) {
-                case "STUDENT":
-                    List<Student> students = studentService.findAll();
-                    for(Student student : students) {
-                        if (student.getUser().getId().equals(user.get().getId()))
-                            studentService.deleteById(student.getId());
-                    }
-                case "DIRECTOR":
-                    List<Director> directors = directorService.findAll();
-                    for(Director director : directors) {
-                        if (director.getUser().getId().equals(user.get().getId()))
-                            directorService.deleteById(director.getId());
-                    }
-                case "MANAGER":
-                    List<HrManager> managers = hrManagerService.findAll();
-                    for(HrManager manager : managers) {
-                        if (manager.getUser().getId().equals(user.get().getId()))
-                            hrManagerService.deleteById(manager.getId());
-                    }
-            }
-        }
-
+        userService.removeUserRole(id);
         userService.deleteById(user.get().getId());
+
+        log.info(currentUser.getUsername() + " удалил пользователя " + user.get().getUsername());
         return "redirect:/all_users";
     }
 }

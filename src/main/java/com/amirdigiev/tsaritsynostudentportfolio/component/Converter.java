@@ -20,7 +20,7 @@ public class Converter {
         userDto.setHometown(user.getHometown());
         userDto.setAvatar(user.getAvatar());
         userDto.setNumber(user.getNumber());
-        userDto.setMail(user.getMail());
+        userDto.setMail(user.getEmail());
         userDto.setRole(user.getRole());
 
         return userDto;
@@ -38,7 +38,7 @@ public class Converter {
         user.setHometown(userDto.getHometown());
         user.setAvatar(userDto.getAvatar());
         user.setNumber(userDto.getNumber());
-        user.setMail(userDto.getMail());
+        user.setEmail(userDto.getMail());
         user.setRole(userDto.getRole());
 
         return user;

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Involved</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/involved.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <div th:object="${event}" class="involved_list">
+            <div class="header">
+                <div>Участники мероприятия</div>
+            </div>
+            <div th:each="student : ${students}" class="student">
+                <div class="student_avatar">
+                    <img th:src="@{'/images/avatar/' + ${student.user.avatar}}" alt="аватар">
+                </div>
+                <div class="fullname">ФИО:
+                    <span th:text="${student.user.surname}"></span>
+                    <span th:text="${student.user.name}"></span>
+                    <span th:text="${student.user.patronymic}"></span>
+                </div>
+                <form th:action="@{/accrue_rating/{studentId}(studentId=${student.id})}" method="post" class="accrue_rating">
+                    <button type="submit">Начислить</button>
+                    <select name="rating">
+                        <option th:value="10" th:text="10"></option>
+                        <option th:value="9" th:text="9"></option>
+                        <option th:value="8" th:text="8"></option>
+                        <option th:value="7" th:text="7"></option>
+                        <option th:value="6" th:text="6"></option>
+                        <option th:value="5" th:text="5"></option>
+                    </select>
+                </form>
+                <form th:action="@{/involved/{eventId}(id={event.id})/delete_student/{id}(id=${student.id})}" method="post" class="delete_student">
+                    <button type="submit">Удалить</button>
+                </form>
+                <div class="rating">
+                    <span>Рейтинг:</span>
+                    <span th:text="${student.rating}"></span>
+                    <img src="/images/home/star.png" alt="звезда">
+                </div>
+                <div class="group">
+                    Номер группы: <span th:text="${student.groupNumber} ?: 'Не указана'"></span>
+                </div>
+                <div class="mail">
+                    Email: <span th:text="${student.user.email}"></span>
+                </div>
+                <div class="phone">
+                    Ном. телефона: <span th:text="${student.user.number}"></span>
+                </div>
+                <div class="birthday">
+                    Дата рождения: <span th:text="${#temporals.format(student.user.birthday, 'dd MMMM yyyy')}"></span>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -6,9 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/footer.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/edit.css}">
 </head>
 <body>
@@ -48,7 +47,7 @@
                     <label for="birthday">День рождения:<input th:field="*{birthday}" name="birthday" id="birthday" type="date"></label>
                 </div>
                 <div class="mail">
-                    <label for="mail">Эл.почта:<input th:field="*{mail}" name="mail" id="mail" type="email"></label>
+                    <label for="mail">Эл.почта:<input th:field="*{email}" name="mail" id="mail" type="email"></label>
                 </div>
                 <div class="hometown">
                     <label for="hometown">Город:<input th:field="*{hometown}" name="hometown" id="hometown" type="text"></label>
@@ -56,27 +55,35 @@
                 <div class="number">
                     <label for="number">Номер тел.:<input th:field="*{number}" name="number" id="number" type="text"></label>
                 </div>
+                <div th:if="*{role == 'STUDENT'}" th:object="${student}">
+                    <div class="group">
+                        <label for="group">
+                            Ном. группы:<input th:field="*{groupNumber}" name="group" id="group" type="text">
+                        </label>
+                    </div>
+                    <div class="faculty">
+                        <label for="faculty">
+                            Факультет:<input th:field="*{faculty}" name="faculty" id="faculty" type="text">
+                        </label>
+                    </div>
+                </div>
+                <div th:if="*{role == 'DIRECTOR'}" th:object="${director}">
+                    <div class="department">
+                        <label for="department">
+                            Отделение:<input th:field="*{department}" name="department" id="department" type="text">
+                        </label>
+                    </div>
+                </div>
+                <div th:if="*{role == 'MANAGER'}" th:object="${manager}">
+                    <div class="company">
+                        <label for="company">
+                            Компания:<input th:field="*{company}" name="company" id="company" type="text">
+                        </label>
+                    </div>
+                </div>
                 <div class="avatar" style="margin-top: 10px">
                     <label for="img">
                         <input type="file" name="img" id="img">
-                    </label>
-                </div>
-                <div th:if="*{role == 'STUDENT'}" th:object="${student}">
-                    <label for="group">
-                        Ном. группы:<input th:field="*{groupNumber}" name="group" id="group" type="text">
-                    </label>
-                    <label for="faculty">
-                        Факультет:<input th:field="*{faculty}" name="faculty" id="faculty" type="text">
-                    </label>
-                </div>
-                <div th:if="*{role == 'DIRECTOR'}" th:object="${director}">
-                    <label for="department">
-                        Отделение:<input th:field="*{department}" name="department" id="department" type="text">
-                    </label>
-                </div>
-                <div th:if="*{role == 'MANAGER'}" th:object="${manager}">
-                    <label for="company">
-                        Отделение:<input th:field="*{company}" name="company" id="company" type="text">
                     </label>
                 </div>
                 <button class="submit" type="submit">Отредактировать</button>

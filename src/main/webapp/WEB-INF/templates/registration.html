@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-</head>
-<body>
-<!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
@@ -14,15 +7,22 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/nav_panel.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/registration.css}">
 </head>
 <body>
+    <div th:replace="fragments/nav_panel :: nav_panel"></div>
+    <header th:replace="fragments/header :: header"></header>
     <main>
         <div class="heading">
             <h1>Регистрация</h1>
         </div>
         <div class="registr_block">
             <form method="post" th:action="@{/registration}" th:object="${newUser}">
+                <div th:if="${param.error}" class="incorrect-data">
+                    <span>Заполните все поля!</span>
+                </div>
                 <div class="username">
                     <label for="username">Имя польз.:<input th:field="*{username}" id="username" type="text"></label>
                 </div>
@@ -58,7 +58,6 @@
                         <option th:value="'STUDENT'" th:text="Student"></option>
                         <option th:value="'MANAGER'" th:text="Manager"></option>
                         <option th:value="'DIRECTOR'" th:text="Director"></option>
-                        <option th:value="'MODERATOR'" th:text="Moderator"></option>
                         <option th:value="'ADMIN'" th:text="Admin"></option>
                     </select>
                 </div>

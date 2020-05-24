@@ -22,7 +22,7 @@ public class Certificate implements Serializable {
     private String certificateImage;
     private boolean approved;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 

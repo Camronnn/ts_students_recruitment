@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
+
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/login.css}">
 </head>
 <body>
@@ -16,6 +17,9 @@
     <div class="login">
         <img class="key" src="/images/login_key.png" alt="ключ">
         <form method="post" th:action="@{/login}">
+            <div th:if="${param.error}" class="incorrect-data">
+                <span>Ошибка: Введены неверные данные</span>
+            </div>
             <div class="username">
                 <label for="username">Имя:
                     <input name="username" id="username" type="text" placeholder="Введите имя..." autofocus="autofocus">

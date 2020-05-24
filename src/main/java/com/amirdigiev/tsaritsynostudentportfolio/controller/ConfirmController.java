@@ -51,7 +51,6 @@ public class ConfirmController {
         Optional<Certificate> certificate = certificateService.findById(id);
         if (certificate.isPresent()) {
             certificate.get().setApproved(true);
-
             Student student = certificate.get().getStudent();
             student.setRating(student.getRating() + 5);
 
